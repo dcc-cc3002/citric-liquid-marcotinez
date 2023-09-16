@@ -1,6 +1,8 @@
 package cl.uchile.dcc.citric
 package model
 
+import cl.uchile.dcc.citric.model.entities.PlayerCharacter
+
 import scala.collection.mutable.ArrayBuffer
 
 /** Represents a single cell on a board, known as a Panel.
@@ -12,7 +14,7 @@ import scala.collection.mutable.ArrayBuffer
   * structures.
   *
   * @author [[https://github.com/r8vnhill Ignacio Slater M.]]
-  * @author [[https://github.com/YOUR-USERNAME YOUR NAME]]
+  * @author [[https://github.com/marcotinez Marco Martínez S.]]
   */
 trait Panel {
 
@@ -21,7 +23,7 @@ trait Panel {
     * In the game, multiple characters might be on the same panel at once, e.g., if multiple players
     * land on the same space.
     */
-  val characters: ArrayBuffer[PlayerCharacter]
+  val characters: ArrayBuffer[PlayerCharacter] //This could be a Map, using name and panel
 
   /** An array of panels that are directly connected to this one.
    *

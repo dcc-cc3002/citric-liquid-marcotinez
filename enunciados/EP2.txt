@@ -1,0 +1,33 @@
+Cada panel tiene:
+- Un tipo
+- Puede tener uno o más jugadores
+- Tiene uno o más paneles siguientes
+
+
+al iniciar un turno, el jugador lanza un dado de 6 caras y se mueve esa
+cantidad de paneles, en la direccion q indiquen, si hay un panel con más de 1
+panel siguiente, el jugador elige el camino.
+
+Paneles:
+- NeutralPanel: no pasa nada, termina su turno sin novedades
+- HomePanel: Cada jugador tiene uno de estos, es SU panel personal, se puede
+             usar de dos maneras distintas:
+             - Si lo compraste, te puedes detener en el
+             - Si no, se activa cuando caes en el
+             En ambos casos, el turno termina al activar la casilla, cuando se activa
+             el jugador recupera un punto de vida y realiza un norma check
+
+- BonusPanel: Otorga estrellas al jugador, si cae aquí el jugador debe lanzar un dado
+               de 6 caras y ganará una cantidad de estrellas igual a una formula
+
+- DropPanel: este quita estrellas al jugador, nuevamente dado de 6 caras y se
+             descuenta con una formula
+
+- EncounterPanel: el jugador entra en combate con un WildHunt aleatorio
+
+
+DETALLES:
+- recordar que las clases son constructores, tener ojos con los argumentos inicializadores
+- necesito siempre recibir la lista de characters para construir el panel?
+- es mejor delegar las metodos de los paneles al player y que el panel se encargue de llamarlos.
+  cómo verifico si el jugador está en el panel?
