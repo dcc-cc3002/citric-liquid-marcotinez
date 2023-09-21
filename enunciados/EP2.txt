@@ -31,3 +31,5 @@ DETALLES:
 - necesito siempre recibir la lista de characters para construir el panel?
 - es mejor delegar las metodos de los paneles al player y que el panel se encargue de llamarlos.
   cómo verifico si el jugador está en el panel?
+
+prueba pa github
