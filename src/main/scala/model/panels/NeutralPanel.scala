@@ -2,6 +2,9 @@ package cl.uchile.dcc.citric
 package model.panels
 
 import model.{AbstractPanels, Panel}
+
+import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
+
 import scala.collection.mutable.ArrayBuffer
 
 /** This panel has no effect on the player. If a player lands here, their turn
@@ -13,10 +16,17 @@ import scala.collection.mutable.ArrayBuffer
  * */
 class NeutralPanel(nextPanels: ArrayBuffer[Panel]) extends AbstractPanels(nextPanels) {
 
+  /** The type of panel. */
   val panelType: String = "Neutral"
 
-  /** Constructor auxiliar en el caso de que creemos un EncounterPanel sin paneles adyacentes. */
+  /** Auxiliary constructor in case no arguments are provided when creating the panel.
+   *
+   * @return A new BonusPanel instance with no connections.
+   *
+   * */
   def this() {
     this(ArrayBuffer.empty[Panel])
   }
+
+  //override def activatePanel(player: PlayerCharacter): Unit = ???
 }

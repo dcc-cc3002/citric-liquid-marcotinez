@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.panels
 import model.{AbstractPanels, Panel}
-import cl.uchile.dcc.citric.model.entities.PlayerCharacter
+import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -16,26 +16,18 @@ import scala.collection.mutable.ArrayBuffer
  * @author [[https://github.com/marcotinez/ Marco Martínez S.]] */
 class BonusPanel(nextPanels: ArrayBuffer[Panel]) extends AbstractPanels(nextPanels) {
 
+  /** The type of panel. */
   val panelType: String = "Bonus"
 
-  /** Constructor auxiliar en el caso de que creemos un BonusPanel sin paneles adyacentes. */
+  /** Auxiliary constructor in case no arguments are provided when creating the panel.
+   *
+   * @return A new BonusPanel instance with no connections.
+   *
+   * */
   def this() {
     this(ArrayBuffer.empty[Panel])
   }
 
-  /** Method responsible for calculating and adding stars to the player.
-   *
-   *  - Este metodo probablemente se usará en la clase PlayerCharacter, y desde este panel
-   *    solo haremos un llamado para que se ejecute.
-   * */
-  def StarBonus(player: PlayerCharacter): Unit = {
-    if(characters.contains(player)) {
-      val starsBonus: Int = player.rollDice()
-      val norma: Int = player.normaLevel
-      if (norma * starsBonus < 3 * starsBonus) {
-        player.stars += norma * starsBonus
-      }
-      else player.stars += (3 * starsBonus)
-    }
-  }
+  //Debemos hacer un llamado a la funcion getCharacters, luego aplicar el bonus a todos los personajes en la lista.
+  //override def activatePanel(player: PlayerCharacter): Unit = ???
 }

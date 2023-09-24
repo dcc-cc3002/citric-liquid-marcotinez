@@ -1,8 +1,7 @@
 package cl.uchile.dcc.citric
 package model
 
-import cl.uchile.dcc.citric.model.entities.PlayerCharacter
-
+import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 import scala.collection.mutable.ArrayBuffer
 
 /** Represents a single cell on a board, known as a Panel.
@@ -49,4 +48,32 @@ trait Panel {
     * @param player The player character to remove from this panel.
     */
   def removeCharacter(player: PlayerCharacter): Unit
+
+  /** Returns the characters that are currently on the panel.
+   *
+   * This may be used to check if a player is on the panel, or to apply an effect to all the players
+   * on the panel.
+   *
+   * @return an array of PlayerCharacter instances that are currently on this panel.
+   *
+   * */
+  def getCharacters(): ArrayBuffer[PlayerCharacter]
+
+  /** Returns the next panels that are directly connected to this one.
+   *
+   * This can be invoked to check the possible next steps a player might take after being on this
+   * panel.
+   *
+   * @return a List of Panel instances that are adjacent or connected to this panel.
+   */
+  def getNextPanels(): ArrayBuffer[Panel]
+
+
+  /** Method responsible for applying the effects of each panel on the player.
+   *
+   * The method call depends on the panel.
+   *
+   * //@param player The player character who will receive the effects of the panel */
+  //def activatePanel(player: PlayerCharacter): Unit
+
 }

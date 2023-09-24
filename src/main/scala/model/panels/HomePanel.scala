@@ -2,7 +2,7 @@ package cl.uchile.dcc.citric
 package model.panels
 
 import model.{AbstractPanels, Panel}
-import cl.uchile.dcc.citric.model.entities.PlayerCharacter
+import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -18,27 +18,24 @@ import scala.collection.mutable.ArrayBuffer
   * regains one health point, and the panel will perform a Norma check.
   *
   * @param nextPanels An array of panels that are directly connected to this one.
-  * @param owner The player who owns this panel, this does not mean it is activated by the player.
   *
   * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
   */
 
-class HomePanel(nextPanels: ArrayBuffer[Panel],
-                val owner: PlayerCharacter) extends AbstractPanels(nextPanels) {
+class HomePanel(nextPanels: ArrayBuffer[Panel]) extends AbstractPanels(nextPanels) {
 
+  /** The type of panel. */
   val panelType: String = "Home"
 
-  /** Constructor auxiliar en el caso de que creemos un HomePanel sin paneles adyacentes. */
-  def this(owner: PlayerCharacter) {
-    this(ArrayBuffer.empty[Panel], owner)
+  /** Auxiliary constructor in case no arguments are provided when creating the panel.
+   *
+   * @return A new BonusPanel instance with no connections.
+   *
+   * */
+  def this() {
+    this(ArrayBuffer.empty[Panel])
   }
 
-  /** Method responsible for reward the player after the activation */
-  def reward(player: PlayerCharacter): Unit = {
-    if(characters.contains(player) && player == owner) {
-      player.hp += 1
-      player.NormaCheck(player.normaLevel)
-      }
-    }
+  //override def activatePanel(player: PlayerCharacter): Unit = ???
 
 }

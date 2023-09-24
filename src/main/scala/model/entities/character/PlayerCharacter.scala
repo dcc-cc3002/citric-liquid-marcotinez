@@ -1,5 +1,7 @@
 package cl.uchile.dcc.citric
-package model.entities
+package model.entities.character
+
+import cl.uchile.dcc.citric.model.entities.GameCharacter
 
 import scala.util.Random
 
@@ -30,8 +32,6 @@ import scala.util.Random
   * @param evasion The player's skill to completely avoid certain attacks.
   * @param randomNumberGenerator A utility to generate random numbers. Defaults to a new `Random`
   *                              instance.
-  * @param stars The number of stars the player has collected.
-  * @param hp The current health points of the player.
   *
   * @author [[https://github.com/danielRamirezL/ Daniel Ramírez L.]]
   * @author [[https://github.com/joelriquelme/ Joel Riquelme P.]]
@@ -44,29 +44,64 @@ class PlayerCharacter(val name: String,
                       val attack: Int,
                       val defense: Int,
                       val evasion: Int,
-                      val randomNumberGenerator: Random = new Random(),
-                      var stars: Int = 0,
-                      var normaLevel: Int = 1,
-                      var hp: Int) {
+                      val randomNumberGenerator: Random = new Random()) extends GameCharacter {
 
+  /** Health points that can be modified throughout the game. */
+  var hp: Int = maxHp
 
-  /** Rolls a dice and returns a value between 1 to 6. */
+  /** The player's current norma level. */
+  var normaLevel: Int = 1
+
+  /** The number of stars the player has collected. */
+  private var starsAmount: Int = 0
+
+  /** Rolls a dice and returns a value between 1 to 6.
+   *
+   * @return a random number between 1 and 6.
+   * */
   def rollDice(): Int = {
     randomNumberGenerator.nextInt(6) + 1
   }
 
-  /** Increases the number of stars by the given amount. */
-  def NormaCheck(normalevel: Int): Unit = {
-    println("Norma Check")
+  /** Returns the player's norma level.
+   *
+   * @return the player's norma level.
+   * */
+  def normaCount(): Int = {
+    normaLevel
   }
 
-  /** Increases the number of stars. */
-  def starBonus(): Unit = {
-
+  /** Increases the player's norma level by one.
+   *
+   * @return the player's norma level.
+   * */
+  def normaClear(): Unit = {
+    normaLevel += 1
   }
 
-  /** Decreases the number of stars. */
-  def starDrop(): Unit = {
+  /** Returns the player's stars count
+   *
+   * @return the amount of stars the player has.
+   * */
+  def starsCount(): Int = {
+    starsAmount
+  }
 
+  /** Increases the number of stars by a given amount.
+   *
+   * @param amount the amount of stars to add.
+   * @return the amount of stars the player has.
+   * */
+  def starBonus(amount: Int): Unit = {
+    starsAmount += amount
+  }
+
+  /** Decreases the number of stars by a given amount.
+   *
+   * @param amount the amount of stars to add.
+   * @return the amount of stars the player has.
+   * */
+  def starDrop(amount: Int): Unit = {
+    starsAmount -= amount
   }
 }

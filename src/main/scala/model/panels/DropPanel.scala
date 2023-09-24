@@ -2,7 +2,7 @@ package cl.uchile.dcc.citric
 package model.panels
 
 import model.{AbstractPanels, Panel}
-import cl.uchile.dcc.citric.model.entities.PlayerCharacter
+import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -17,25 +17,20 @@ import scala.collection.mutable.ArrayBuffer
  * */
 class DropPanel(nextPanels: ArrayBuffer[Panel]) extends AbstractPanels(nextPanels) {
 
+  /** The type of panel. */
   val panelType: String = "Drop"
 
-  /** Constructor auxiliar en el caso de que creemos un BonusPanel sin paneles adyacentes. */
+  /** Auxiliary constructor in case no arguments are provided when creating the panel.
+   *
+   * @return A new BonusPanel instance with no connections.
+   *
+   * */
   def this() {
     this(ArrayBuffer.empty[Panel])
   }
 
-  /** Method responsible for calculating and remove stars to the player.
-   *
-   *  - Este metodo probablemente se usará en la clase PlayerCharacter, y desde este panel
-   *   solo haremos un llamado para que se ejecute.
-   *
-   *   */
-  def StarDrop(player: PlayerCharacter): Unit = {
-    if(characters.contains(player)) {
-      val starsDrop: Int = player.rollDice()
-      val norma: Int = player.normaLevel
+  //Debemos hacer un llamado a getCharacters y luego aplicar el descuento a todos los que se encuentren en el panel.
+  //override def activatePanel(player: PlayerCharacter): Unit = ???
 
-      player.stars -= (norma * starsDrop)
-    }
-  }
+
 }

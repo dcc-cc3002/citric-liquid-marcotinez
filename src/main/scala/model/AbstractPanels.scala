@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model
 
-import cl.uchile.dcc.citric.model.entities.PlayerCharacter
+import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 import scala.collection.mutable.ArrayBuffer
 
 /** This abstract class is responsible for encapsulating all the common aspects of panels.
@@ -30,5 +30,15 @@ abstract class AbstractPanels(var nextPanels: ArrayBuffer[Panel]) extends Panel 
     if(characters.contains(player)) {
       characters -= player
     }
+  }
+
+  /** Method responsible for returning the characters that are currently on the panel. */
+  override def getCharacters(): ArrayBuffer[PlayerCharacter] = {
+    characters
+  }
+
+  /** Method responsible for returning the next panels that are directly connected to this one. */
+  override def getNextPanels(): ArrayBuffer[Panel] = {
+    nextPanels
   }
 }
