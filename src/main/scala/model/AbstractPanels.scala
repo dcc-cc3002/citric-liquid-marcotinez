@@ -9,19 +9,20 @@ import scala.collection.mutable.ArrayBuffer
   * by the constructor of each panel. This approach is due the possibility that a panel may
   * not have next panels.
   *
-  * @param nextPanels An array of panels that are directly connected to this one.
-  *
   * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
   * */
-abstract class AbstractPanels(var nextPanels: ArrayBuffer[Panel]) extends Panel {
+abstract class AbstractPanels extends Panel {
 
   /** An array of characters that are currently on this panel. */
   override val characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer.empty[PlayerCharacter]
 
+  /** An array with the Next panels.*/
+  var nextPanels: ArrayBuffer[Panel] = ArrayBuffer.empty[Panel]
+
   /** Method responsible for adding a character to the panel. */
   override def addCharacter(player: PlayerCharacter): Unit = {
     if (!characters.contains(player)) {
-      characters.append(player)
+      characters += player
     }
   }
 
@@ -29,6 +30,20 @@ abstract class AbstractPanels(var nextPanels: ArrayBuffer[Panel]) extends Panel 
   override def removeCharacter(player: PlayerCharacter): Unit = {
     if(characters.contains(player)) {
       characters -= player
+    }
+  }
+
+  /** Method responsible for adding a next panel to the panel. */
+  override def addNextPanel(nextPanel: Panel): Unit = {
+    if (!nextPanels.contains(nextPanel)) {
+      nextPanels += nextPanel
+    }
+  }
+
+  /** Method responsible for removing a next panel from the panel. */
+  override def removeNextPanel(nextPanel: Panel): Unit = {
+    if(nextPanels.contains(nextPanel)) {
+      nextPanels -= nextPanel
     }
   }
 

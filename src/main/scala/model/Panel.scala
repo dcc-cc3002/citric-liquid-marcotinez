@@ -68,6 +68,23 @@ trait Panel {
    */
   def getNextPanels(): ArrayBuffer[Panel]
 
+  /** add a NextPanel to the list of nextPanels of this panel.
+   *
+   * This might be invoked add panels and create a board.
+   *
+   * @param nextPanel The panel to add to the list of nextPanels of this panel.
+   * */
+
+  def addNextPanel(nextPanel: Panel): Unit
+
+  /** Removes a NextPanel from the list of nextPanels of this panel.
+   *
+   * This might be invoked to remove panels and create a board.
+   *
+   * @param nextPanel The panel to remove from the list of nextPanels of this panel.
+   * */
+
+  def removeNextPanel(nextPanel: Panel): Unit
 
   /** Method responsible for applying the effects of each panel on the player.
    *
@@ -75,5 +92,6 @@ trait Panel {
    *
    * //@param player The player character who will receive the effects of the panel */
   //def activatePanel(player: PlayerCharacter): Unit
+
 
 }

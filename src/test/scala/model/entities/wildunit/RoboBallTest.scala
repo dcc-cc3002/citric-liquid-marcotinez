@@ -3,6 +3,7 @@ package model.entities.wildunit
 
 class RoboBallTest extends munit.FunSuite {
 
+  /* This is the object under test. */
   private val roboBall = new RoboBall()
 
   test("A roboBall should have correctly set their attributes") {

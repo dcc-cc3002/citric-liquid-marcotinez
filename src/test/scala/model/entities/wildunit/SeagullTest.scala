@@ -3,6 +3,7 @@ package model.entities.wildunit
 
 class SeagullTest extends munit.FunSuite {
 
+  /* This is the object under test. */
   private val seagull = new Seagull()
 
   test("A seagull should have correctly set their attributes") {

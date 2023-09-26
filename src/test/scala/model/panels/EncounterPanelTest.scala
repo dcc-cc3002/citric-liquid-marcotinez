@@ -61,14 +61,30 @@ class EncounterPanelTest extends FunSuite {
     val neutralPanel: Panel = new NeutralPanel()
 
     //caso 1: panel solo un panel adyacente
-    val testPanel: EncounterPanel = new EncounterPanel(ArrayBuffer(bonusPanel))
-    val actualPanels = testPanel.nextPanels
-    assertEquals(actualPanels, ArrayBuffer[Panel](bonusPanel))
+    val testPanel: EncounterPanel = new EncounterPanel()
+    testPanel.addNextPanel(bonusPanel)
+    assertEquals(testPanel.getNextPanels(), ArrayBuffer[Panel](bonusPanel))
 
     //caso 2: panel con varios paneles adyacentes
-    val testPanel2: EncounterPanel = new EncounterPanel(ArrayBuffer(bonusPanel, dropPanel, encounterPanel, homePanel, neutralPanel))
-    val actualPanels2 = testPanel2.nextPanels
-    assertEquals(actualPanels2, ArrayBuffer[Panel](bonusPanel, dropPanel, encounterPanel, homePanel, neutralPanel))
+    val testPanel2: EncounterPanel = new EncounterPanel()
+    testPanel2.addNextPanel(bonusPanel)
+    assertEquals(testPanel2.getNextPanels(), ArrayBuffer[Panel](bonusPanel))
+    testPanel2.addNextPanel(dropPanel)
+    assertEquals(testPanel2.getNextPanels(), ArrayBuffer[Panel](bonusPanel, dropPanel))
+    testPanel2.addNextPanel(encounterPanel)
+    assertEquals(testPanel2.getNextPanels(), ArrayBuffer[Panel](bonusPanel, dropPanel, encounterPanel))
+    testPanel2.addNextPanel(homePanel)
+    assertEquals(testPanel2.getNextPanels(), ArrayBuffer[Panel](bonusPanel, dropPanel, encounterPanel, homePanel))
+    testPanel2.addNextPanel(neutralPanel)
+    assertEquals(testPanel2.getNextPanels(), ArrayBuffer[Panel](bonusPanel, dropPanel, encounterPanel, homePanel, neutralPanel))
+  }
+
+  test("A Next panel can be removed of a panel.") {
+    val testPanel: EncounterPanel = new EncounterPanel()
+    testPanel.addNextPanel(encounterPanel)
+    assertEquals(testPanel.getNextPanels(), ArrayBuffer[Panel](encounterPanel))
+    testPanel.removeNextPanel(encounterPanel)
+    assertEquals(testPanel.getNextPanels(), ArrayBuffer.empty[Panel])
   }
 
   test("Each panel has a random WildUnit") {

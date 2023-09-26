@@ -4,6 +4,7 @@ package model.entities.wildunit
 
 class ChickenTest extends munit.FunSuite {
 
+  /* This is the object under test. */
   private val chicken = new Chicken()
 
   test("A chicken should have correctly set their attributes") {
