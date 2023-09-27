@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citric
-package model
+package model.entities.character
 
 import scala.util.Random
 
@@ -14,7 +14,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   private val attack = 1
   private val defense = 1
   private val evasion = 1
-  private val randomNumberGenerator = new Random(11)
+  private var randomNumberGenerator: Random = _
   /* Add any other constants you need here... */
 
   /*
@@ -28,14 +28,14 @@ class PlayerCharacterTest extends munit.FunSuite {
 
   // This method is executed before each `test(...)` method.
   override def beforeEach(context: BeforeEach): Unit = {
+    randomNumberGenerator = new Random(11)
     character = new PlayerCharacter(
       name,
       maxHp,
       attack,
       defense,
       evasion,
-      randomNumberGenerator
-    )
+      randomNumberGenerator)
   }
 
   test("A character should have correctly set their attributes") {
@@ -44,6 +44,7 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(character.attack, attack)
     assertEquals(character.defense, defense)
     assertEquals(character.evasion, evasion)
+    assertEquals(character.normaLevel, 1)
   }
 
   // Two ways to test randomness (you can use any of them):
@@ -58,11 +59,33 @@ class PlayerCharacterTest extends munit.FunSuite {
   // 2. Set a seed and test the result is always the same.
   // A seed sets a fixed succession of random numbers, so you can know that the next numbers
   // are always the same for the same seed.
-  test("A character should be able to roll a dice with a fixed seed") {
-    val other =
-      new PlayerCharacter(name, maxHp, attack, defense, evasion, new Random(11))
-    for (_ <- 1 to 10) {
-      assertEquals(character.rollDice(), other.rollDice())
+   test ("A character should be able to roll a dice with a fixed seed") {
+        val other =
+          new PlayerCharacter(name, maxHp, attack, defense, evasion, new Random(11))
+        for (_ <- 1 to 10) {
+          assertEquals(character.rollDice(), other.rollDice())
     }
+  }
+
+  test("A player can increase their norma level") {
+    character.normaClear()
+    assertEquals(character.normaCount(), 2)
+    character.normaClear()
+    assertEquals(character.normaCount(), 3)
+  }
+
+  test("A player can increase their stars count in a given amount") {
+    character.starBonus(10)
+    assertEquals(character.starsCount(), 10)
+    character.starBonus(10)
+    assertEquals(character.starsCount(), 20)
+  }
+
+  test("A player can decrease their stars count in a given amount") {
+    //we start with 20 stars for the last test
+    character.starBonus(10)
+    assertEquals(character.starsCount(), 10)
+    character.starDrop(5)
+    assertEquals(character.starsCount(), 5)
   }
 }
