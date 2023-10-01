@@ -5,9 +5,7 @@ import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 import scala.collection.mutable.ArrayBuffer
 
 /** This abstract class is responsible for encapsulating all the common aspects of panels.
-  * nextPanels is not implemented in this class as it will be the argument received
-  * by the constructor of each panel. This approach is due the possibility that a panel may
-  * not have next panels.
+  *
   *
   * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
   * */
@@ -48,12 +46,12 @@ abstract class AbstractPanels extends Panel {
   }
 
   /** Method responsible for returning the characters that are currently on the panel. */
-  override def getCharacters(): ArrayBuffer[PlayerCharacter] = {
+  override def getCharacters: ArrayBuffer[PlayerCharacter] = {
     characters
   }
 
   /** Method responsible for returning the next panels that are directly connected to this one. */
-  override def getNextPanels(): ArrayBuffer[Panel] = {
+  override def getNextPanels: ArrayBuffer[Panel] = {
     nextPanels
   }
 }

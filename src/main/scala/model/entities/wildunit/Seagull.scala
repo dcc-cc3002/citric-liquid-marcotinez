@@ -14,9 +14,15 @@ import model.entities.GameCharacter
  *
  * */
 
-class Seagull extends WildUnit with GameCharacter {
-  val maxHp: Int = 3
-  val attack: Int = 1
-  val defense: Int = -1
-  val evasion: Int = -1
+class Seagull extends AbstractWildUnit with WildUnit{
+
+  protected val maxHp: Int = 3
+  protected val attack: Int = 1
+  protected val defense: Int = -1
+  protected val evasion: Int = -1
+
+  protected val name: String = "Chicken"
+  protected var hp: Int = maxHp
+  protected var starsAmount: Int = 0
+
 }

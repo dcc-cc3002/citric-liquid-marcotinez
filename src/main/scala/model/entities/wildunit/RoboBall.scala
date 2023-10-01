@@ -12,9 +12,14 @@ import model.entities.GameCharacter
  * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
  *
  * */
-class RoboBall extends WildUnit with GameCharacter {
-  val maxHp: Int = 3
-  val attack: Int = -1
-  val defense: Int = 1
-  val evasion: Int = -1
+class RoboBall extends AbstractWildUnit with WildUnit {
+
+  protected val maxHp: Int = 3
+  protected val attack: Int = -1
+  protected val defense: Int = 1
+  protected val evasion: Int = -1
+
+  protected val name: String = "RoboBall"
+  protected var hp: Int = maxHp
+  protected var starsAmount: Int = 0
 }
