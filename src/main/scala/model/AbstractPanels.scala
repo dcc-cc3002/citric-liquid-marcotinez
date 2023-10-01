@@ -47,11 +47,11 @@ abstract class AbstractPanels extends Panel {
 
   /** Method responsible for returning the characters that are currently on the panel. */
   override def getCharacters: ArrayBuffer[PlayerCharacter] = {
-    characters
+    characters.clone()
   }
 
   /** Method responsible for returning the next panels that are directly connected to this one. */
   override def getNextPanels: ArrayBuffer[Panel] = {
-    nextPanels
+    nextPanels.clone()
   }
 }
