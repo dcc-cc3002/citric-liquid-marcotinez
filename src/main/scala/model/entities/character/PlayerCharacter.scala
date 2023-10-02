@@ -1,5 +1,7 @@
 package cl.uchile.dcc.citric
-package model
+package model.entities.character
+
+import cl.uchile.dcc.citric.model.entities.{AbstractPlayerCharacter, GameCharacter}
 
 import scala.util.Random
 
@@ -35,17 +37,37 @@ import scala.util.Random
   * @author [[https://github.com/joelriquelme/ Joel Riquelme P.]]
   * @author [[https://github.com/r8vnhill/ Ignacio Slater M.]]
   * @author [[https://github.com/Seivier/ Vicente González B.]]
-  * @author [[https://github.com/~Your github account~/ ~Your Name~]]
+  * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
   */
-class PlayerCharacter(val name: String,
-              val maxHp: Int,
-              val attack: Int,
-              val defense: Int,
-              val evasion: Int,
-              val randomNumberGenerator: Random = new Random()) {
+class PlayerCharacter(override protected val name: String,
+                      override protected val maxHp: Int,
+                      override protected val attack: Int,
+                      override protected val defense: Int,
+                      override protected val evasion: Int,
+                      override protected val randomNumberGenerator: Random = new Random()) extends
+  AbstractPlayerCharacter(name, maxHp, attack, defense, evasion, randomNumberGenerator) {
 
-  /** Rolls a dice and returns a value between 1 to 6. */
+  /** Health points that can be modified throughout the game. */
+  protected var hp: Int = maxHp
+
+  /** The player's current norma level. */
+  protected var normaLevel: Int = 1
+
+  /** The number of stars the player has collected. */
+  protected var starsAmount: Int = 0
+
+  /** The number of wins the player has. */
+  private var wins: Int = 0
+
+  /** Rolls a dice and returns a value between 1 to 6.
+   *
+   * @return a random number between 1 and 6.
+   * */
   def rollDice(): Int = {
     randomNumberGenerator.nextInt(6) + 1
   }
+
+  /** “Return the player’s win count */
+  def getWins: Int = wins
+
 }
