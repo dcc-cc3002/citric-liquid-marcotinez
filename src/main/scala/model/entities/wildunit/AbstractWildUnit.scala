@@ -41,6 +41,8 @@ abstract class AbstractWildUnit extends GameCharacter{
 
 
   //------SETTERS AND MORE.----------
+
+  //------HIT POINTS------------
   /** Set the hit points of the character on a specific amount.
    *
    * @param hp the new amount of hit points to establish.
@@ -55,10 +57,20 @@ abstract class AbstractWildUnit extends GameCharacter{
 
   protected def damage(hp: Int): Unit = {
     if (this.hp - hp < 0) {
-      this.hp = 0
+      setHp(0)
     }
     else
-      this.hp -= hp
+      setHp(this.hp - hp)
+  }
+
+  //------------STARS------------
+
+  /** Set the amount of stars the player has.
+   *
+   * @param starsAmount the new amount of stars to establish.
+   * */
+  protected def setStars(starsAmount: Int): Unit = {
+    this.starsAmount = starsAmount
   }
 
   /** Increases the number of stars by a given amount.
@@ -67,7 +79,7 @@ abstract class AbstractWildUnit extends GameCharacter{
    * @return the amount of stars the WildUnit has.
    * */
   protected def starBonus(amount: Int): Unit = {
-    starsAmount += amount
+    setStars(getStarsAmount + amount)
   }
 
   /** Decreases the number of stars by a given amount.
@@ -77,9 +89,9 @@ abstract class AbstractWildUnit extends GameCharacter{
    * */
   protected def starDrop(amount: Int): Unit = {
     if (starsAmount - amount < 0) {
-      starsAmount = 0
+      setStars(0)
     }
     else
-      starsAmount -= amount
+      setStars(getStarsAmount - amount)
   }
 }
