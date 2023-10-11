@@ -2,6 +2,8 @@ package cl.uchile.dcc.citric
 package model.entities
 
 trait GameCharacter {
+  /** The maximum health points a character can have. It represents the character's endurance. */
+  var enCombate: Boolean = true
 
   /** Returns the character's current hit points. */
   def getHp: Int
@@ -36,10 +38,15 @@ trait GameCharacter {
    * */
   protected def damage(hp: Int): Unit
 
-  /** Method responsible for initiating the combat between the current player and a given Game Character
+  /** Method that calculates and return the attack caused by a player.
    *
-   * //@param character Enemy GameCharacter to be fought against
+   *
    * */
-  //def battle(character: GameCharacter): Unit
+  def ataque(enemy: GameCharacter): Int
 
+  def defend(atk_vs: Int): Unit
+
+  def evade(atk_vs: Int): Unit
+
+  def rollDice(): Int
 }

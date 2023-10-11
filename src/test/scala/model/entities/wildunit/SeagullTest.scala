@@ -1,14 +1,10 @@
 package cl.uchile.dcc.citric
 package model.entities.wildunit
 
+import model.entities.character.PlayerCharacter
+
 class SeagullTest extends munit.FunSuite {
 
-  class TestSeagull extends Seagull {
-    def publicSetHp(hp: Int): Unit = setHp(hp)
-    def publicDamage(hp: Int): Unit = damage(hp)
-    def publicStarBonus(amount: Int): Unit = starBonus(amount)
-    def publicStarDrop (amount: Int): Unit = starDrop(amount)
-  }
   /* This is the object under test. */
   private val seagull = new Seagull()
 
@@ -28,41 +24,59 @@ class SeagullTest extends munit.FunSuite {
   }
 
   test("A seagull can increase their stars amount") {
-    val seagull = new TestSeagull()
-    seagull.publicStarBonus(1)
+    val seagull = new Seagull()
+    seagull.starBonus(1)
     assertEquals(seagull.getStarsAmount, 1)
   }
 
   test("A seagull can decrease their stars amount") {
-    val seagull = new TestSeagull()
-    seagull.publicStarBonus(1)
-    seagull.publicStarDrop(1)
+    val seagull = new Seagull()
+    seagull.starBonus(1)
+    seagull.starDrop(1)
     assertEquals(seagull.getStarsAmount, 0)
   }
 
   test("A chicken can't have negative stars") {
-    val seagull = new TestSeagull()
-    seagull.publicStarDrop(1)
+    val seagull = new Seagull()
+    seagull.starDrop(1)
     assertEquals(seagull.getStarsAmount, 0)
   }
 
-  test("A seagull can set their hp") {
-    val seagull = new TestSeagull()
-    seagull.publicSetHp(2)
+  test("A seagull can damage their hp") {
+    val seagull = new Seagull()
+    seagull.damage(1)
     assertEquals(seagull.getHp, 2)
   }
 
-  test("A seagull can damage their hp") {
-    val seagull = new TestSeagull()
-    seagull.publicSetHp(2)
-    seagull.publicDamage(1)
-    assertEquals(seagull.getHp, 1)
+  test("A seagull can't have negative hp") {
+    val seagull = new Seagull()
+    seagull.damage(3)
+    assertEquals(seagull.getHp, 0)
+  }
+  test("A seagull can attack") {
+    val seagull = new Seagull()
+    val other = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
+    for (_ <- 1 to 10) {
+      val ataque_c = seagull.ataque(other)
+      assert(2 <= ataque_c && ataque_c <= 7)
+    }
   }
 
-  test("A WildUnit can't have negative hp") {
-    val seagull = new TestSeagull()
-    seagull.publicSetHp(2)
-    seagull.publicDamage(3)
-    assertEquals(seagull.getHp, 0)
+  test("A seagull can defend") {
+    val seagull = new Seagull()
+    val atk = 1
+    for (_ <- 1 to 10) {
+      val defensa_c = seagull.defend(atk)
+      assert(seagull.getHp < 3)
+    }
+  }
+
+  test("A seagull can evade") {
+    val seagull = new Seagull()
+    val atk = 1
+    for (_ <- 1 to 10) {
+      val evasion_c = seagull.evade(atk)
+      assert(seagull.getHp <= 3)
+    }
   }
 }

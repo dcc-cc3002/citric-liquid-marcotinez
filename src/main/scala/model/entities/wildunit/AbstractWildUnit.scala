@@ -1,7 +1,9 @@
 package cl.uchile.dcc.citric
 package model.entities.wildunit
-
+import scala.util.Random
 import model.entities.GameCharacter
+
+import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 /** This abstract class is responsible for encapsulating all common aspects of WildUnits.
  * The inherited methods of GameCharacter are defined, primarily getters and setters;
  * furthermore, the variables that each of the WildUnits will have are also defined.
@@ -51,16 +53,20 @@ abstract class AbstractWildUnit extends GameCharacter{
     if (hp > maxHp) {
       this.hp = maxHp
     }
+    if (hp == 0) {
+      this.hp = 0
+      enCombate = false
+    }
     else
       this.hp = hp
   }
 
-  protected def damage(hp: Int): Unit = {
-    if (this.hp - hp < 0) {
-      setHp(0)
+  def damage(hp: Int): Unit = {
+    val newHp = Math.max(this.hp - hp, 0)
+    setHp(newHp)
+    if (newHp == 0) {
+      enCombate = false
     }
-    else
-      setHp(this.hp - hp)
   }
 
   //------------STARS------------
@@ -78,7 +84,7 @@ abstract class AbstractWildUnit extends GameCharacter{
    * @param amount the amount of stars to add.
    * @return the amount of stars the WildUnit has.
    * */
-  protected def starBonus(amount: Int): Unit = {
+  def starBonus(amount: Int): Unit = {
     setStars(getStarsAmount + amount)
   }
 
@@ -87,11 +93,51 @@ abstract class AbstractWildUnit extends GameCharacter{
    * @param amount the amount of stars to add.
    * @return the amount of stars the WildUnit has.
    * */
-  protected def starDrop(amount: Int): Unit = {
+  def starDrop(amount: Int): Unit = {
     if (starsAmount - amount < 0) {
       setStars(0)
     }
     else
       setStars(getStarsAmount - amount)
+  }
+
+  /** Rolls a dice and returns a value between 1 to 6.
+   *
+   * @return a random number between 1 and 6.
+   * */
+  def rollDice(): Int = {
+    val randomNumberGenerator: Random = new Random()
+    randomNumberGenerator.nextInt(6) + 1
+  }
+
+  def ataque(enemy: GameCharacter): Int = {
+    if (this.enCombate && enemy.enCombate){
+      val atk_vs = this.rollDice() + this.getAttack
+      atk_vs
+    }
+    else {
+      0
+    }
+  }
+
+  def defend(atk_vs: Int): Unit = {
+    val expresion: Int = this.rollDice() + this.getAttack - (this.rollDice() + this.getDefense)
+    if (1 > expresion) {
+      this.setHp(this.getHp - 1)
+    }
+    else {
+      this.setHp(this.getHp - expresion)
+    }
+  }
+
+  def evade(atk_vs: Int): Unit = {
+    val expresion1: Int = this.rollDice() + this.getEvasion
+    val expresion2: Int = this.rollDice() + this.getAttack
+    if (expresion1 > expresion2) {
+      this.setHp(this.getHp)
+    }
+    else {
+      this.setHp(this.getHp - atk_vs)
+    }
   }
 }

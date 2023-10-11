@@ -35,5 +35,7 @@ class EncounterPanel extends AbstractPanels {
     wildunits(index)
   }
 
-  //override def activatePanel(player: PlayerCharacter): Unit = ???
+  def apply(player: PlayerCharacter): Unit = {
+    print("Encounter activated")
+  }
 }

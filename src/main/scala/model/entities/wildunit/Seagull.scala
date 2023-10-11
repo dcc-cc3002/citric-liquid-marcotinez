@@ -21,7 +21,7 @@ class Seagull extends AbstractWildUnit with WildUnit{
   protected val defense: Int = -1
   protected val evasion: Int = -1
 
-  protected val name: String = "Chicken"
+  protected val name: String = "Seagull"
   protected var hp: Int = maxHp
   protected var starsAmount: Int = 0
 

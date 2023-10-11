@@ -17,6 +17,9 @@ class BonusPanel extends AbstractPanels {
   /** The type of panel. */
   val panelType: String = "Bonus"
 
-  //Debemos hacer un llamado a la funcion getCharacters, luego aplicar el bonus a todos los personajes en la lista.
-  //override def activatePanel(player: PlayerCharacter): Unit = ???
+  def apply(player: PlayerCharacter): Unit = {
+    val roll = player.rollDice()
+    val stars = math.min(roll * player.getNormaLevel, roll * 3)
+    player.starBonus(stars)
+  }
 }

@@ -86,4 +86,12 @@ class DropPanelTest extends FunSuite {
     testPanel.removeNextPanel(dropPanel)
     assertEquals(testPanel.getNextPanels, ArrayBuffer.empty[Panel])
   }
+
+  test("A player can lost stars when they land on a bonus panel") {
+    dropPanel.apply(testPlayer1)
+    for (_ <- 1 to 10) {
+      val stars = testPlayer1.getStarsAmount
+      assert(0 <= stars && stars <= 1)
+    }
+  }
 }

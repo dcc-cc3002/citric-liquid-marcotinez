@@ -88,4 +88,11 @@ class HomePanelTest extends FunSuite {
     assertEquals(testPanel.getNextPanels, ArrayBuffer.empty[Panel])
   }
 
+  test("the panel can apply something") {
+    val testPanel: HomePanel = new HomePanel()
+    val other: PlayerCharacter = new PlayerCharacter("other", 10, 1, 1, 1, new Random(11))
+    val texto: String = "Encounter activated"
+    assertEquals(testPanel.apply(other), print("HomePanel activated"))
+  }
+
 }

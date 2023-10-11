@@ -26,6 +26,8 @@ class HomePanel extends AbstractPanels {
   val panelType: String = "Home"
   private var owner: PlayerCharacter = _
 
-  //override def activatePanel(player: PlayerCharacter): Unit = ???
+  def apply(player: PlayerCharacter): Unit = {
+    print("HomePanel activated")
+  }
 
 }

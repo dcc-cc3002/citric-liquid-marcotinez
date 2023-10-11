@@ -91,7 +91,7 @@ trait Panel {
    * The method call depends on the panel.
    *
    * //@param player The player character who will receive the effects of the panel */
-  //def activatePanel(player: PlayerCharacter): Unit
+  def apply(player: PlayerCharacter): Unit
 
 
 }

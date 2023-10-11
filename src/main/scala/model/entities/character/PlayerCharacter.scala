@@ -70,4 +70,35 @@ class PlayerCharacter(override protected val name: String,
   /** “Return the player’s win count */
   def getWins: Int = wins
 
+  def ataque(enemy: GameCharacter): Int = {
+    if (this.enCombate && enemy.enCombate){
+      val atk_vs = this.rollDice() + this.getAttack
+      return atk_vs
+    }
+    else {
+      return 0
+    }
+  }
+
+  def defend(atk_vs: Int): Unit = {
+    val expresion = this.rollDice() + this.getAttack - (this.rollDice() + this.getDefense)
+    if (1 > expresion) {
+      this.setHp(this.getHp - 1)
+    }
+    else {
+      this.setHp(this.getHp - expresion)
+    }
+  }
+
+  def evade(atk_vs: Int): Unit = {
+    val expresion1 = this.rollDice() + this.getEvasion
+    val expresion2 = this.rollDice() + this.getAttack
+    if (expresion1 > expresion2) {
+      this.setHp(this.getHp)
+    }
+    else {
+      this.setHp(this.getHp - atk_vs)
+    }
+  }
+
 }

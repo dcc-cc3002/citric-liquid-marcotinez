@@ -1,6 +1,7 @@
 package cl.uchile.dcc.citric
 package model.entities
 import scala.util.Random
+import scala.math._
 
 abstract class AbstractPlayerCharacter(protected val name: String,
                                        protected val maxHp: Int,
@@ -47,7 +48,10 @@ abstract class AbstractPlayerCharacter(protected val name: String,
     if (hp > maxHp) {
       this.hp = maxHp
     }
-    else
+    if (hp == 0) {
+      this.hp = 0
+      enCombate = false
+    } else
       this.hp = hp
   }
 
@@ -55,20 +59,23 @@ abstract class AbstractPlayerCharacter(protected val name: String,
    *
    * @param hp the amount of hit points to add.
    * */
-  protected def heal(hp: Int): Unit = {
-    if (this.hp + hp > maxHp) {
-      setHp(maxHp)
-    }
-    else
-      setHp(this.hp + hp)
+  def heal(hp: Int): Unit = {
+    if (this.hp == 0 && hp > 0) {
+      setHp(Math.min(hp, maxHp))
+      enCombate = true
+    } else
+      setHp(Math.min(this.hp + hp, maxHp))
   }
 
-  protected def damage(hp: Int): Unit = {
-    if (this.hp - hp < 0) {
-      setHp(0)
+  def damage(hp: Int): Unit = {
+    val newHp = Math.max(this.hp - hp, 0)
+    setHp(newHp)
+    if(newHp == 0) {
+      enCombate = false
     }
-    else
-      setHp(this.hp - hp)
+    else{
+      enCombate = true
+    }
   }
 
   //-----------------STARS-----------------
@@ -86,7 +93,7 @@ abstract class AbstractPlayerCharacter(protected val name: String,
    * @param amount the amount of stars to add.
    * @return the amount of stars the player has.
    * */
-  protected def starBonus(amount: Int): Unit = {
+  def starBonus(amount: Int): Unit = {
     setStars(getStarsAmount + amount)
   }
 
@@ -95,7 +102,7 @@ abstract class AbstractPlayerCharacter(protected val name: String,
    * @param amount the amount of stars to add.
    * @return the amount of stars the player has.
    * */
-  protected def starDrop(amount: Int): Unit = {
+  def starDrop(amount: Int): Unit = {
     if (starsAmount - amount < 0) {
       setStars(0)
     }
@@ -109,7 +116,7 @@ abstract class AbstractPlayerCharacter(protected val name: String,
    *
    * @param newNorma the new norma level to establish.
    * */
-  protected def setNormaLevel(newNorma: Int): Unit = {
+   private def setNormaLevel(newNorma: Int): Unit = {
     this.normaLevel = newNorma
   }
 
@@ -117,7 +124,7 @@ abstract class AbstractPlayerCharacter(protected val name: String,
    *
    * @return the player's norma level.
    * */
-  protected def normaClear(): Unit = {
+   def normaClear(): Unit = {
     setNormaLevel(normaLevel + 1)
   }
 

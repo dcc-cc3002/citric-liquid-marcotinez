@@ -12,22 +12,6 @@ class PlayerCharacterTest extends munit.FunSuite {
   */
 
   /* Add any other constants you need here... */
-
-  class TestPlayerCharacter( name: String,
-                             maxHp: Int,
-                             attack: Int,
-                             defense: Int,
-                             evasion: Int,
-                             randomNumberGenerator: Random
-                           ) extends PlayerCharacter(name, maxHp, attack, defense, evasion, randomNumberGenerator) {
-    def publicSetHp(hp: Int): Unit = setHp(hp)
-    def publicHeal(hp: Int): Unit = heal(hp)
-    def publicDamage(hp: Int): Unit = damage(hp)
-    def publicStarBonus(amount: Int): Unit = starBonus(amount)
-    def publicStarDrop (amount: Int): Unit = starDrop(amount)
-    def publicNormaClear(): Unit = normaClear()
-  }
-
   private val name = "testPlayer"
   private val maxHp = 10
   private val attack = 1
@@ -40,13 +24,13 @@ class PlayerCharacterTest extends munit.FunSuite {
   This is a good practice because it will reset the object before each test, so you don't have
   to worry about the state of the object between tests.
   */
-  private var character: TestPlayerCharacter = _  // <- x = _ is the same as x = null
+  private var character: PlayerCharacter = _  // <- x = _ is the same as x = null
   /* Add any other variables you need here... */
 
   // This method is executed before each `test(...)` method.
   override def beforeEach(context: BeforeEach): Unit = {
     randomNumberGenerator = new Random(11)
-    character = new TestPlayerCharacter(
+    character = new PlayerCharacter(
       name,
       maxHp,
       attack,
@@ -87,29 +71,29 @@ class PlayerCharacterTest extends munit.FunSuite {
   }
 
   test("A player can increase their norma level") {
-    character.publicNormaClear()
+    character.normaClear()
     assertEquals(character.getNormaLevel, 2)
-    character.publicNormaClear()
+    character.normaClear()
     assertEquals(character.getNormaLevel, 3)
   }
 
   test("A player can increase their stars count in a given amount") {
-    character.publicStarBonus(10)
+    character.starBonus(10)
     assertEquals(character.getStarsAmount, 10)
-    character.publicStarBonus(10)
+    character.starBonus(10)
     assertEquals(character.getStarsAmount, 20)
   }
 
   test("A player can decrease their stars count in a given amount") {
     //we start with 20 stars for the last test
-    character.publicStarBonus(10)
+    character.starBonus(10)
     assertEquals(character.getStarsAmount, 10)
-    character.publicStarDrop(5)
+    character.starDrop(5)
     assertEquals(character.getStarsAmount, 5)
   }
 
   test("A player can't have negative stars") {
-    character.publicStarDrop(5)
+    character.starDrop(5)
     assertEquals(character.getStarsAmount, 0)
   }
 
@@ -117,37 +101,25 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(character.getHp, maxHp)
   }
 
-  test("A player can set their hp"){
-    character.publicSetHp(5)
-    assertEquals(character.getHp, 5)
-  }
-
-  test("A player can´t set their hp higher than their maxHp"){
-    character.publicSetHp(15)
-    assertEquals(character.getHp, maxHp)
-  }
-
   test("A player can heal their hp"){
-    character.publicSetHp(5)
-    character.publicHeal(5)
+    character.damage(5)
+    character.heal(5)
     assertEquals(character.getHp, 10)
   }
 
   test("A player can damage their hp"){
-    character.publicSetHp(5)
-    character.publicDamage(5)
-    assertEquals(character.getHp, 0)
+
+    character.damage(5)
+    assertEquals(character.getHp, 5)
   }
 
   test("A player can't heal more than their maxHp"){
-    character.publicSetHp(5)
-    character.publicHeal(10)
+    character.heal(20)
     assertEquals(character.getHp, 10)
   }
 
   test("A player can't have negative hp"){
-    character.publicSetHp(5)
-    character.publicDamage(10)
+    character.damage(100)
     assertEquals(character.getHp, 0)
   }
 }

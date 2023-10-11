@@ -86,4 +86,12 @@ class BonusPanelTest extends FunSuite {
     testPanel.removeNextPanel(bonusPanel)
     assertEquals(testPanel.getNextPanels, ArrayBuffer.empty[Panel])
   }
+
+  test("A player can be rewarded with stars when they land on a bonus panel") {
+    bonusPanel.apply(testPlayer1)
+    for (_ <- 1 to 10) {
+      val stars = testPlayer1.getStarsAmount
+      assert( 1 <= stars && stars <= 19)
+    }
+  }
 }

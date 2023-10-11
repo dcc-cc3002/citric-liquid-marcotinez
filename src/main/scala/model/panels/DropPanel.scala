@@ -20,6 +20,10 @@ class DropPanel extends AbstractPanels {
 
   //Debemos hacer un llamado a getCharacters y luego aplicar el descuento a todos los que se encuentren en el panel.
   //override def activatePanel(player: PlayerCharacter): Unit = ???
-
+  def apply(player: PlayerCharacter): Unit = {
+    val roll = player.rollDice()
+    val stars = math.min(roll * player.getNormaLevel, roll * 3)
+    player.starDrop(stars)
+  }
 
 }

@@ -6,6 +6,7 @@ import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 import cl.uchile.dcc.citric.model.entities.wildunit.WildUnit
 import munit.FunSuite
 
+import javax.lang.model.element.NestingKind
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
@@ -91,5 +92,12 @@ class EncounterPanelTest extends FunSuite {
     for (_ <- 1 to 10) {
       assert(encounterPanel.obtenerWildUnit().isInstanceOf[WildUnit])
     }
+  }
+
+  test("the panel can apply something"){
+    val testPanel: EncounterPanel = new EncounterPanel()
+    val other: PlayerCharacter = new PlayerCharacter("other", 10, 1, 1, 1, new Random(11))
+    val texto: String = "Encounter activated"
+    assertEquals(testPanel.apply(other), print("Encounter activated"))
   }
 }

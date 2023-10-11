@@ -17,5 +17,7 @@ class NeutralPanel extends AbstractPanels {
   /** The type of panel. */
   val panelType: String = "Neutral"
 
-  //override def activatePanel(player: PlayerCharacter): Unit = ???
+  def apply(player: PlayerCharacter): Unit = {
+    print("NeutralPanel activated")
+  }
 }
