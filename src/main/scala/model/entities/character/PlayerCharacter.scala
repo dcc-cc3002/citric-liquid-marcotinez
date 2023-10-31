@@ -56,8 +56,8 @@ class PlayerCharacter(override protected val name: String,
   /** The number of stars the player has collected. */
   protected var starsAmount: Int = 0
 
-  /** The number of wins the player has. */
-  private var wins: Int = 0
+  /** The number of victories the player has. */
+  protected var victories: Int = 0
 
   /** Rolls a dice and returns a value between 1 to 6.
    *
@@ -66,9 +66,6 @@ class PlayerCharacter(override protected val name: String,
   def rollDice(): Int = {
     randomNumberGenerator.nextInt(6) + 1
   }
-
-  /** “Return the player’s win count */
-  def getWins: Int = wins
 
   def ataque(enemy: GameCharacter): Int = {
     if (this.enCombate && enemy.enCombate){

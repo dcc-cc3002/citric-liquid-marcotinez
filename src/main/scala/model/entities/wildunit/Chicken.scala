@@ -23,5 +23,6 @@ class Chicken extends AbstractWildUnit with WildUnit{
   protected val name: String = "Chicken"
   protected var hp: Int = maxHp
   protected var starsAmount: Int = 0
+  protected var victories: Int = 0
 
 }

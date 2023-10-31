@@ -1,6 +1,15 @@
 package cl.uchile.dcc.citric
 package model.entities
 
+
+/** Represents any unit present in the game (WildUnits and playerCharacters).
+ *  These units shares common attributes for which we define access
+ *  methods (getHp, getAttack, etc.),
+ *  Additionally, we define methods that allow the units to combat
+ *  with each other (ataque, defend, etc.).
+ *
+ *  @author [[https://github.com/marcotinez Marco Martínez S.]]
+ */
 trait GameCharacter {
   /** The maximum health points a character can have. It represents the character's endurance. */
   var enCombate: Boolean = true
@@ -40,13 +49,23 @@ trait GameCharacter {
 
   /** Method that calculates and return the attack caused by a player.
    *
-   *
+   * @param enemy the enemy that will receive the attack.
    * */
   def ataque(enemy: GameCharacter): Int
 
+  /** Method that calculates the damage the defending Wild Unit will receive.
+   *
+   * @param atk_vs Base damage sent by the attacker.
+   * */
   def defend(atk_vs: Int): Unit
 
+  /** Method that allows the WildUnit to evade an attack; based on the rollDice,
+   * it may receive either all the damage or none.
+   *
+   * @param atk_vs Base damage sent by the attacker.
+   * */
   def evade(atk_vs: Int): Unit
 
+  /** RollDice method defined for the GameCharacter */
   def rollDice(): Int
 }

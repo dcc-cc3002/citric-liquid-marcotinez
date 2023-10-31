@@ -47,7 +47,7 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(character.getEvasion, evasion)
     assertEquals(character.getNormaLevel, 1)
     assertEquals(character.getStarsAmount, 0)
-    assertEquals(character.getWins,0)
+    assertEquals(character.getVictories,0)
   }
 
   // Two ways to test randomness (you can use any of them):

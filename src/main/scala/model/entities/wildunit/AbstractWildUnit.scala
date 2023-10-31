@@ -25,6 +25,8 @@ abstract class AbstractWildUnit extends GameCharacter{
   protected var hp: Int
   /** The number of stars the WildUnit has collected. */
   protected var starsAmount: Int
+  /** The number of victories that WildUnit has been accumulating. */
+  protected var victories: Int
 
   //------GETTERS----------
   def getName: String = name

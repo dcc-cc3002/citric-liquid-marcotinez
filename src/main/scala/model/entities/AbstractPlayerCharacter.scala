@@ -13,6 +13,7 @@ abstract class AbstractPlayerCharacter(protected val name: String,
   protected var hp: Int
   protected var normaLevel: Int
   protected var starsAmount: Int
+  protected var victories: Int
 
   //------------GETTERS---------------
   def getName: String = name
@@ -36,6 +37,8 @@ abstract class AbstractPlayerCharacter(protected val name: String,
    * */
   def getStarsAmount: Int = starsAmount
 
+  /** Return the player’s win count */
+  def getVictories: Int = victories
 
   //------------SETTERS---------------
 
