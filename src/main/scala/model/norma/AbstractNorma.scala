@@ -16,11 +16,9 @@ abstract class AbstractNorma extends Norma {
   def getStars: Int = stars
   /** Returns the number of victories required to advance to the next norma level. */
   def getWins: Int = wins
-  /** Returns the objective selected by the player to increase their Norma level. */
-  def getObjective: Objective = objective
 
   /** We define a default value to objective */
-  var objective: Objective = new Stars
+  protected var objective: Objective = new Stars
 
   /** This method is responsible for performing the levelUp check
    * based on the objective selected by the player
@@ -28,7 +26,7 @@ abstract class AbstractNorma extends Norma {
    * @param player the player to check.
    * */
   def normaCheck(player: PlayerCharacter): Boolean = {
-    getObjective.levelUp(player, this)
+    objective.levelUp(player, this)
   }
 
 }

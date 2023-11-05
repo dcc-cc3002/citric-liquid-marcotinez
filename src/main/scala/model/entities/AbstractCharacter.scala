@@ -124,4 +124,6 @@ abstract class AbstractCharacter extends GameCharacter  {
       this.damage(atk_vs)
     }
   }
+
+
 }

@@ -23,7 +23,7 @@ class HomePanel extends AbstractPanels {
 
   /** The type of panel. */
   val panelType: String = "Home"
-  protected var owner: PlayerCharacter = _
+  private var owner: PlayerCharacter = _
 
   /** Method that sets the owner of the panel. */
   def setOwner(player: PlayerCharacter): Unit = {
@@ -42,9 +42,7 @@ class HomePanel extends AbstractPanels {
    * */
   def apply(player: PlayerCharacter): Unit = {
     //We heal the player 1 hp
-    if(player.getHp < player.getMaxHp) {
-      player.heal(1)
-    }
+    player.heal(1)
     //We check if the player can level up
     if(player.normaCheck()) {
       player.normaClear()

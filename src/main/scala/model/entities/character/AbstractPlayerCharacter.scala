@@ -32,7 +32,6 @@ abstract class AbstractPlayerCharacter extends AbstractCharacter {
   }
 
 
-
   //-----------------COMBAT---------------------
   //En estos metodos, this corresponde a un playerCharacter.
 
@@ -41,7 +40,7 @@ abstract class AbstractPlayerCharacter extends AbstractCharacter {
    *
    * @param wildUnit the Wild Unit that is defeated.
    * */
-  def defeatWildUnit(wildUnit: WildUnit): Unit = {
+  def wildUnitKO(wildUnit: WildUnit): Unit = {
     wildUnit.enCombate = false
     this.setStars(this.starsAmount + wildUnit.getStarsAmount + wildUnit.getExtraStars)
     this.victories += wildUnit.getVictories
@@ -52,7 +51,7 @@ abstract class AbstractPlayerCharacter extends AbstractCharacter {
    *
    * @param playerCharacter the Player Character that is defeated.
    * */
-  def defeatPlayerCharacter(playerCharacter: PlayerCharacter): Unit = {
+  def playerCharacterKO(playerCharacter: PlayerCharacter): Unit = {
     //We give the playerCharacter half of the stars the defeated playerCharacter had and 2 victories
     this.setStars(this.starsAmount + playerCharacter.getStarsAmount/2)
     this.victories += 2

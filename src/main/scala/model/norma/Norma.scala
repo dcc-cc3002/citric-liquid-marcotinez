@@ -20,23 +20,16 @@ trait Norma {
   protected val stars: Int
   /** Returns the number of stars required to advance to the next norma level. */
   def getStars: Int
-
   /** The number of victories required to advance to the next norma level. */
   protected val wins: Int
   /** Returns the number of victories required to advance to the next norma level. */
   def getWins: Int
-
   /** The objective selected by the player to increase their Norma level. */
   protected var objective: Objective
 
-  /** Returns the objective selected by the player to increase their Norma level. */
-  def getObjective: Objective
-
   /** The value of nextNorma is unique for each Norma since it indicates
-   *  the next rule level.
-   */
+   *  the next rule level. */
   val nextNormaLevel: Norma
-
   /** This method is responsible for performing the levelUp check
    * based on the objective selected by the player
    *

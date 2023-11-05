@@ -61,14 +61,14 @@ class SeagullTest extends munit.FunSuite {
   test("A seagull can defeat a chicken") {
     val chicken = new Chicken()
     val seagull = new Seagull()
-    seagull.defeatWildUnit(chicken)
+    seagull.wildUnitKO(chicken)
     assertEquals(seagull.getStarsAmount, 3)
   }
 
   test("A seagull can defeat a RoboBall") {
     val roboBall = new RoboBall()
     val seagull = new Seagull()
-    seagull.defeatWildUnit(roboBall)
+    seagull.wildUnitKO(roboBall)
     assertEquals(seagull.getStarsAmount, 2)
   }
 
@@ -76,7 +76,7 @@ class SeagullTest extends munit.FunSuite {
     val seagull = new Seagull()
     val player = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
     player.starBonus(10)
-    seagull.defeatPlayerCharacter(player)
+    seagull.playerCharacterKO(player)
     assertEquals(seagull.getStarsAmount, 5)
     assertEquals(player.getStarsAmount, 5)
   }

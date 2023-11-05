@@ -68,21 +68,26 @@ trait GameCharacter {
   /** RollDice method defined for the GameCharacter */
   def rollDice(): Int
 
-
   //------------Double Dispatch Combat------------------
 
+  /** This method is responsible for initiating an attack and carrying out the
+   *  opponent's response (for now, defense and evasion are executed randomly).
+   *
+   *  @param character the character to attack.
+   *  */
   def attacked(character: GameCharacter): Unit
+
   /** Method responsible for distributing the number of stars and wins to the
    * character who defeats a Wild Unit
    *
    * @param wildUnit the Wild Unit that is defeated.
    * */
-  def defeatWildUnit(wildUnit: WildUnit): Unit
+  def wildUnitKO(wildUnit: WildUnit): Unit
 
   /** Method responsible for distributing the number of stars and wins to the
    * character who defeats a Player Character
    *
    * @param playerCharacter the Player Character that is defeated.
    * */
-  def defeatPlayerCharacter(playerCharacter: PlayerCharacter): Unit
+  def playerCharacterKO(playerCharacter: PlayerCharacter): Unit
 }

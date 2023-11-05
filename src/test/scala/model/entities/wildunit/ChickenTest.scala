@@ -64,14 +64,14 @@ class ChickenTest extends munit.FunSuite {
   test("A chicken can defeat a RoboBall") {
     val chicken = new Chicken()
     val roboBall = new RoboBall()
-    chicken.defeatWildUnit(roboBall)
+    chicken.wildUnitKO(roboBall)
     assertEquals(chicken.getStarsAmount, 2)
   }
 
   test("A chicken can defeat a Seagull") {
     val chicken = new Chicken()
     val seagull = new Seagull()
-    chicken.defeatWildUnit(seagull)
+    chicken.wildUnitKO(seagull)
     assertEquals(chicken.getStarsAmount, 2)
   }
 
@@ -79,7 +79,7 @@ class ChickenTest extends munit.FunSuite {
     val chicken = new Chicken()
     val player = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
     player.starBonus(10)
-    chicken.defeatPlayerCharacter(player)
+    chicken.playerCharacterKO(player)
     assertEquals(chicken.getStarsAmount, 5)
     assertEquals(player.getStarsAmount, 5)
   }

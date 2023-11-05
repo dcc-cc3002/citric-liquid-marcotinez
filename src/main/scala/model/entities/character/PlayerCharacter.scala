@@ -74,7 +74,7 @@ class PlayerCharacter(override protected val name: String,
    * */
   def getNorma: Norma = normaLevel
 
-  /** Method responsible for starting the 'normaCheck. */
+  /** Method responsible for starting the normaCheck. */
   def normaCheck(): Boolean = {
     normaLevel.normaCheck(this)
   }
@@ -91,15 +91,16 @@ class PlayerCharacter(override protected val name: String,
   /**  */
   def attacked(character: GameCharacter): Unit = {
     val atk: Int = character.getAttack
-    val response: Int = Random.nextInt(2)+1
-    if(response == 1) {
+    val ranNum: Int = Random.nextInt(2)+1
+    //We generate a random number to determine the WildUnit's response
+    if(ranNum == 1) {
       this.defend(atk)
     }
     else {
       this.evade(atk)
     }
     if (this.getHp == 0) {
-      character.defeatPlayerCharacter(this)
+      character.playerCharacterKO(this)
     }
   }
 

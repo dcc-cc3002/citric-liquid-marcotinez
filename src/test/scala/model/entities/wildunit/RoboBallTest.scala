@@ -61,14 +61,14 @@ class RoboBallTest extends munit.FunSuite {
   test("A RoboBall can defeat a Chicken") {
     val chicken = new Chicken()
     val roboBall = new RoboBall()
-    roboBall.defeatWildUnit(chicken)
+    roboBall.wildUnitKO(chicken)
     assertEquals(roboBall.getStarsAmount, 3)
   }
 
   test("A RoboBall can defeat a Seagull") {
     val roboBall = new RoboBall()
     val seagull = new Seagull()
-    roboBall.defeatWildUnit(seagull)
+    roboBall.wildUnitKO(seagull)
     assertEquals(roboBall.getStarsAmount, 2)
   }
 
@@ -76,7 +76,7 @@ class RoboBallTest extends munit.FunSuite {
     val roboBall = new RoboBall()
     val player = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
     player.starBonus(10)
-    roboBall.defeatPlayerCharacter(player)
+    roboBall.playerCharacterKO(player)
     assertEquals(roboBall.getStarsAmount, 5)
     assertEquals(player.getStarsAmount, 5)
   }

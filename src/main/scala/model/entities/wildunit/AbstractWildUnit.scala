@@ -23,16 +23,16 @@ abstract class AbstractWildUnit extends AbstractCharacter with WildUnit {
    * @param character the character that is attacking the WildUnit.
    * */
   def attacked(character: GameCharacter): Unit = {
-    val random: Random = new Random()
-    val response: Int = random.nextInt(2) + 1
     val atk: Int = character.getAttack
-    if (response == 1) {
+    //We generate a random number to determine the WildUnit's response
+    if ((Random.nextInt(2) + 1) == 1) {
       this.defend(atk)
     } else {
       this.evade(atk)
     }
+    //We check if the WildUnit is KO
     if (this.getHp == 0) {
-      character.defeatWildUnit(this)
+      character.wildUnitKO(this)
     }
   }
 
@@ -42,7 +42,7 @@ abstract class AbstractWildUnit extends AbstractCharacter with WildUnit {
    *
    * @param wildUnit the Wild Unit that is defeated.
    * */
-  def defeatWildUnit(wildUnit: WildUnit): Unit = {
+  def wildUnitKO(wildUnit: WildUnit): Unit = {
     //We give stars to the Character
     wildUnit.enCombate = false
     this.starsAmount += wildUnit.getStarsAmount + wildUnit.getExtraStars
@@ -53,7 +53,7 @@ abstract class AbstractWildUnit extends AbstractCharacter with WildUnit {
    *
    * @param playerCharacter the Player Character that is defeated.
    * */
-  def defeatPlayerCharacter(playerCharacter: PlayerCharacter): Unit = {
+  def playerCharacterKO(playerCharacter: PlayerCharacter): Unit = {
     //We give stars to the Character
     this.starsAmount += playerCharacter.getStarsAmount/2
     //We take stars from the playerCharacter

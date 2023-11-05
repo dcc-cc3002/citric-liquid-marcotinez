@@ -172,21 +172,21 @@ class PlayerCharacterTest extends munit.FunSuite {
 
   test("A player can defeat a Chicken") {
     val chicken = new Chicken
-    character.defeatWildUnit(chicken)
+    character.wildUnitKO(chicken)
     assertEquals(character.getStarsAmount, 3)
     assertEquals(character.getVictories, 1)
   }
 
   test("A player can defeat a seaGull") {
     val seaGull = new Seagull
-    character.defeatWildUnit(seaGull)
+    character.wildUnitKO(seaGull)
     assertEquals(character.getStarsAmount, 2)
     assertEquals(character.getVictories, 1)
   }
 
   test("A player can defeat a RoboBall") {
     val roboBall = new RoboBall
-    character.defeatWildUnit(roboBall)
+    character.wildUnitKO(roboBall)
     assertEquals(character.getStarsAmount, 2)
     assertEquals(character.getVictories, 1)
   }
@@ -194,7 +194,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   test("A player can defeat another player") {
     val other = new PlayerCharacter("other", maxHp, attack, defense, evasion, randomNumberGenerator)
     other.starBonus(10)
-    character.defeatPlayerCharacter(other)
+    character.playerCharacterKO(other)
     assertEquals(character.getStarsAmount, 5)
     assertEquals(character.getVictories, 2)
     assertEquals(other.getStarsAmount, 5)
