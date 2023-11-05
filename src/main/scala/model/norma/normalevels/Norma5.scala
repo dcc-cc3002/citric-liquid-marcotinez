@@ -1,5 +1,7 @@
 package cl.uchile.dcc.citric
-package model.norma
+package model.norma.normalevels
+
+import model.norma.{AbstractNorma, Norma}
 
 /** This class represents Norma level 5, and it contains the values
  * for the number of stars and wins required to advance to the next rule level. */

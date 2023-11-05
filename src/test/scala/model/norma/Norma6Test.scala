@@ -1,6 +1,8 @@
 package cl.uchile.dcc.citric
 package model.norma
 
+import model.norma.normalevels.Norma6
+
 class Norma6Test extends munit.FunSuite{
 
   private val norma = new Norma6()

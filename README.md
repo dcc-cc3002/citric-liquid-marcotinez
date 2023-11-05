@@ -28,7 +28,7 @@ en estas dos ultimas se implementó el double dispatch para la entrega de estrel
 que se utiliza para saber si la unidad está disponible para el combate o no (muerta :$).
 - El neutral Panel quedó con el metodo apply vacio.
 - Se fixeo el getter de los ArrayBuffer, ahora deberían retornar una copia no mutable correctamente.
-- 
+- Al momento de entrega tengo un 99% de coverage en la carpeta model.
 
 
 <div style="text-align:center;">
