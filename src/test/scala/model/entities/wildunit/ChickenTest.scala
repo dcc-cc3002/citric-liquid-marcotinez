@@ -16,13 +16,8 @@ class ChickenTest extends munit.FunSuite {
     assertEquals(chicken.getAttack, -1)
     assertEquals(chicken.getDefense, -1)
     assertEquals(chicken.getEvasion, 1)
-  }
-
-  test("A chicken should have correctly set their name") {
-    assertEquals(chicken.getName, "Chicken")
-  }
-
-  test("A chicken should have correctly set their stars amount") {
+    assertEquals(chicken.getExtraStars, 3)
+    assertEquals(chicken.getExtraVictories, 1)
     assertEquals(chicken.getStarsAmount, 0)
   }
 
@@ -31,6 +26,7 @@ class ChickenTest extends munit.FunSuite {
     chicken.starBonus(1)
     assertEquals(chicken.getStarsAmount, 1)
   }
+
   test("A chicken can decrease their stars amount") {
     val chicken = new Chicken()
     chicken.starBonus(1)
@@ -56,30 +52,36 @@ class ChickenTest extends munit.FunSuite {
     assertEquals(chicken.getHp, 0)
   }
 
-  test("A chicken can attack"){
-    val chicken = new Chicken()
+  test("A chicken can be attacked, and it will defend or evade randomly") {
     val other = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
-    for (_ <- 1 to 10) {
-      val ataque_c = chicken.ataque(other)
-      assert( 0 <= ataque_c && ataque_c <= 5)
+    val chicken = new Chicken()
+    for (_ <- 1 to 50) {
+      other.attacked(chicken)
+      assert( chicken.getHp <= 3 || chicken.getHp >= 0)
     }
   }
 
-  test("A chicken can defend"){
+  test("A chicken can defeat a RoboBall") {
     val chicken = new Chicken()
-    val atk = 1
-    for (_ <- 1 to 10) {
-      val defensa_c = chicken.defend(atk)
-      assert( chicken.getHp < 3)
-    }
+    val roboBall = new RoboBall()
+    chicken.defeatWildUnit(roboBall)
+    assertEquals(chicken.getStarsAmount, 2)
   }
 
-  test("A chicken can evade"){
+  test("A chicken can defeat a Seagull") {
     val chicken = new Chicken()
-    val atk = 1
-    for (_ <- 1 to 10) {
-      val evasion_c = chicken.evade(atk)
-      assert( chicken.getHp <= 3)
-    }
+    val seagull = new Seagull()
+    chicken.defeatWildUnit(seagull)
+    assertEquals(chicken.getStarsAmount, 2)
   }
+
+  test("A chicken can defeat a PlayerCharacter") {
+    val chicken = new Chicken()
+    val player = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
+    player.starBonus(10)
+    chicken.defeatPlayerCharacter(player)
+    assertEquals(chicken.getStarsAmount, 5)
+    assertEquals(player.getStarsAmount, 5)
+  }
+
 }

@@ -1,16 +1,15 @@
 package cl.uchile.dcc.citric
 package model.panels
-
-import cl.uchile.dcc.citric.model.Panel
-import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
+import model.Panel
+import model.entities.character.PlayerCharacter
+import model.norma.objective.Wins
 import munit.FunSuite
-
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
 class HomePanelTest extends FunSuite {
 
-  private val owner = new PlayerCharacter("owner", 10, 1, 1, 1, new Random(11))
+  private val dueño_supremo = new PlayerCharacter("goku", 10, 1, 1, 1, new Random(11))
   private val testPlayer1 = new PlayerCharacter("testPlayer1", 10, 1, 1, 1, new Random(11))
   private val testPlayer2 = new PlayerCharacter("testPlayer2", 10, 1, 1, 1, new Random(11))
 
@@ -23,6 +22,12 @@ class HomePanelTest extends FunSuite {
 
   test("Each panel has a type") {
     assertEquals(homePanel.panelType, "Home")
+  }
+
+  test("Each panel has a owner") {
+    assertEquals(homePanel.getOwner, null)
+    homePanel.setOwner(dueño_supremo)
+    assertEquals(homePanel.getOwner, dueño_supremo)
   }
 
   test("Each panel can be occupied by one or more players") {
@@ -95,4 +100,34 @@ class HomePanelTest extends FunSuite {
     assertEquals(testPanel.apply(other), print("HomePanel activated"))
   }
 
+  test("A player can active the panel and be heal") {
+    val player = new PlayerCharacter("player", 10, 1, 1, 1, new Random(11))
+    player.damage(5)
+    assertEquals(player.getHp, 5)
+    homePanel.apply(player)
+    assertEquals(player.getHp, 6)
+  }
+
+  test("A player can increase their norma level with stars") {
+    val player = new PlayerCharacter("player", 10, 1, 1, 1, new Random(11))
+    player.starBonus(10)
+    homePanel.apply(player)
+    assertEquals(player.getNormaLevel, 2)
+  }
+
+  test("A player can increase their norma level with wins") {
+    val player = new PlayerCharacter("player", 10, 1, 1, 1, new Random(11))
+    player.setVictories(1)
+    player.getNorma.setObjetive(new Wins)
+    homePanel.apply(player)
+    assertEquals(player.getNormaLevel, 2)
+  }
+
+  test("A player may not have a sufficient number of wins to increase their Norma.") {
+    val player = new PlayerCharacter("player", 10, 1, 1, 1, new Random(11))
+    player.setVictories(0)
+    player.getNorma.setObjetive(new Wins)
+    homePanel.apply(player)
+    assertEquals(player.getNormaLevel, 1)
+  }
 }

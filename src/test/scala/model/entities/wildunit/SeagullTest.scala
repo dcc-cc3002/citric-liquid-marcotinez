@@ -13,13 +13,8 @@ class SeagullTest extends munit.FunSuite {
     assertEquals(seagull.getAttack, 1)
     assertEquals(seagull.getDefense, -1)
     assertEquals(seagull.getEvasion, -1)
-  }
-
-  test("A seagull should have correctly set their name") {
-    assertEquals(seagull.getName, "Seagull")
-  }
-
-  test("A seagull should have correctly set their stars amount") {
+    assertEquals(seagull.getExtraStars, 2)
+    assertEquals(seagull.getExtraVictories, 1)
     assertEquals(seagull.getStarsAmount, 0)
   }
 
@@ -53,30 +48,36 @@ class SeagullTest extends munit.FunSuite {
     seagull.damage(3)
     assertEquals(seagull.getHp, 0)
   }
-  test("A seagull can attack") {
-    val seagull = new Seagull()
+
+  test("A seagull can be attacked, and it will defend or evade randomly") {
     val other = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
+    val seagull = new Seagull()
     for (_ <- 1 to 10) {
-      val ataque_c = seagull.ataque(other)
-      assert(2 <= ataque_c && ataque_c <= 7)
+      seagull.attacked(other)
+      assert( seagull.getHp <= 3 || seagull.getHp >= 0)
     }
   }
 
-  test("A seagull can defend") {
+  test("A seagull can defeat a chicken") {
+    val chicken = new Chicken()
     val seagull = new Seagull()
-    val atk = 1
-    for (_ <- 1 to 10) {
-      val defensa_c = seagull.defend(atk)
-      assert(seagull.getHp < 3)
-    }
+    seagull.defeatWildUnit(chicken)
+    assertEquals(seagull.getStarsAmount, 3)
   }
 
-  test("A seagull can evade") {
+  test("A seagull can defeat a RoboBall") {
+    val roboBall = new RoboBall()
     val seagull = new Seagull()
-    val atk = 1
-    for (_ <- 1 to 10) {
-      val evasion_c = seagull.evade(atk)
-      assert(seagull.getHp <= 3)
-    }
+    seagull.defeatWildUnit(roboBall)
+    assertEquals(seagull.getStarsAmount, 2)
+  }
+
+  test("A seagull can defeat a PlayerCharacter") {
+    val seagull = new Seagull()
+    val player = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
+    player.starBonus(10)
+    seagull.defeatPlayerCharacter(player)
+    assertEquals(seagull.getStarsAmount, 5)
+    assertEquals(player.getStarsAmount, 5)
   }
 }

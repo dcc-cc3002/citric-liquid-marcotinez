@@ -13,13 +13,8 @@ class RoboBallTest extends munit.FunSuite {
     assertEquals(roboBall.getAttack, -1)
     assertEquals(roboBall.getDefense, 1)
     assertEquals(roboBall.getEvasion, -1)
-  }
-
-  test("A roboBall should have correctly set their name") {
-    assertEquals(roboBall.getName, "RoboBall")
-  }
-
-  test("A roboBall should have correctly set their stars amount") {
+    assertEquals(roboBall.getExtraStars, 2)
+    assertEquals(roboBall.getExtraVictories, 1)
     assertEquals(roboBall.getStarsAmount, 0)
   }
 
@@ -54,30 +49,35 @@ class RoboBallTest extends munit.FunSuite {
     assertEquals(roboBall.getHp, 0)
   }
 
-  test("A roboBall can attack"){
-    val roboBall = new RoboBall()
+  test("A roboBall can be attacked, and it will defend or evade randomly") {
     val other = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
+    val roboBall = new RoboBall()
     for (_ <- 1 to 10) {
-      val ataque_c = roboBall.ataque(other)
-      assert(0 <= ataque_c && ataque_c <= 5)
+      roboBall.attacked(other)
+      assert( roboBall.getHp <= 3 || roboBall.getHp >= 0)
     }
   }
 
-  test("A roboBall can defend") {
+  test("A RoboBall can defeat a Chicken") {
+    val chicken = new Chicken()
     val roboBall = new RoboBall()
-    val atk = 1
-    for (_ <- 1 to 10) {
-      val defensa_c = roboBall.defend(atk)
-      assert(roboBall.getHp < 3)
-    }
+    roboBall.defeatWildUnit(chicken)
+    assertEquals(roboBall.getStarsAmount, 3)
   }
 
-  test("A roboBall can evade") {
+  test("A RoboBall can defeat a Seagull") {
     val roboBall = new RoboBall()
-    val atk = 1
-    for (_ <- 1 to 10) {
-      val evasion_c = roboBall.evade(atk)
-      assert(roboBall.getHp <= 3)
-    }
+    val seagull = new Seagull()
+    roboBall.defeatWildUnit(seagull)
+    assertEquals(roboBall.getStarsAmount, 2)
+  }
+
+  test("A RoboBall can defeat a PlayerCharacter") {
+    val roboBall = new RoboBall()
+    val player = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
+    player.starBonus(10)
+    roboBall.defeatPlayerCharacter(player)
+    assertEquals(roboBall.getStarsAmount, 5)
+    assertEquals(player.getStarsAmount, 5)
   }
 }

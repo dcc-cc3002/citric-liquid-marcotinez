@@ -1,7 +1,8 @@
 package cl.uchile.dcc.citric
 package model.entities.character
 
-import cl.uchile.dcc.citric.model.entities.{AbstractPlayerCharacter, GameCharacter}
+import model.entities.GameCharacter
+import model.norma.{Norma, Norma1, Norma2, Norma3, Norma4, Norma5, Norma6}
 
 import scala.util.Random
 
@@ -44,58 +45,63 @@ class PlayerCharacter(override protected val name: String,
                       override protected val attack: Int,
                       override protected val defense: Int,
                       override protected val evasion: Int,
-                      override protected val randomNumberGenerator: Random = new Random()) extends
-  AbstractPlayerCharacter(name, maxHp, attack, defense, evasion, randomNumberGenerator) {
+                      override protected val randomNumberGenerator: Random = new Random()) extends AbstractPlayerCharacter {
+
 
   /** Health points that can be modified throughout the game. */
-  protected var hp: Int = maxHp
+  override protected var hp: Int = maxHp
 
   /** The player's current norma level. */
-  protected var normaLevel: Int = 1
+  private var normaLevel: Norma = new Norma1
 
   /** The number of stars the player has collected. */
-  protected var starsAmount: Int = 0
+  override protected var starsAmount: Int = 0
 
   /** The number of victories the player has. */
-  protected var victories: Int = 0
+  override protected var victories: Int = 0
 
-  /** Rolls a dice and returns a value between 1 to 6.
+  //-----------------NORMA-----------------
+
+  /** Returns the player's norma level.
    *
-   * @return a random number between 1 and 6.
+   * @return the player's norma level.
    * */
-  def rollDice(): Int = {
-    randomNumberGenerator.nextInt(6) + 1
+  def getNormaLevel: Int = normaLevel.getLevel
+
+  /** Returns the player's norma.
+   *
+   * @return the player's norma.
+   * */
+  def getNorma: Norma = normaLevel
+
+  /** Method responsible for starting the 'normaCheck. */
+  def normaCheck(): Boolean = {
+    normaLevel.normaCheck(this)
+  }
+  /** Method responsible for increasing the norma level. */
+  def normaClear(): Unit = {
+    this.normaLevel = this.normaLevel.nextNorma
   }
 
-  def ataque(enemy: GameCharacter): Int = {
-    if (this.enCombate && enemy.enCombate){
-      val atk_vs = this.rollDice() + this.getAttack
-      return atk_vs
+  /** Method created specifically for testing. */
+  def setVictories(amount: Int): Unit = {
+    this.victories = amount
+  }
+
+  /**  */
+  def attacked(character: GameCharacter): Unit = {
+    val atk: Int = character.getAttack
+    val response: Int = Random.nextInt(2)+1
+    if(response == 1) {
+      this.defend(atk)
     }
     else {
-      return 0
+      this.evade(atk)
+    }
+    if (this.getHp == 0) {
+      character.defeatPlayerCharacter(this)
     }
   }
 
-  def defend(atk_vs: Int): Unit = {
-    val expresion = this.rollDice() + this.getAttack - (this.rollDice() + this.getDefense)
-    if (1 > expresion) {
-      this.setHp(this.getHp - 1)
-    }
-    else {
-      this.setHp(this.getHp - expresion)
-    }
-  }
-
-  def evade(atk_vs: Int): Unit = {
-    val expresion1 = this.rollDice() + this.getEvasion
-    val expresion2 = this.rollDice() + this.getAttack
-    if (expresion1 > expresion2) {
-      this.setHp(this.getHp)
-    }
-    else {
-      this.setHp(this.getHp - atk_vs)
-    }
-  }
 
 }

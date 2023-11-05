@@ -9,6 +9,13 @@ import model.entities.GameCharacter
  *
  * @author [[https://github.com/marcotinez Marco Martínez S.]]
  * */
-trait WildUnit extends GameCharacter{
-
+trait WildUnit extends GameCharacter {
+  /** The extra number of stars that a wild unit delivers when defeated */
+  protected val extraStars: Int
+  /** Returns the extra number of stars that a wild unit delivers when defeated */
+  def getExtraStars: Int
+  /** The number of wins that a wild unit delivers when defeated */
+  protected val extraVictories: Int
+  /** Returns the number of wins that a wild unit delivers when defeated */
+  def getExtraVictories: Int
 }

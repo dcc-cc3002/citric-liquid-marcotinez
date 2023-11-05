@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.entities.wildunit
 
-import model.entities.GameCharacter
+import model.entities.{AbstractCharacter, GameCharacter}
 
 /** A class representing the WildUnit RoboBall.
  *
@@ -12,15 +12,19 @@ import model.entities.GameCharacter
  * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
  *
  * */
-class RoboBall extends AbstractWildUnit with WildUnit {
-
+class RoboBall extends AbstractWildUnit {
+  //Combat Stats
   protected val maxHp: Int = 3
   protected val attack: Int = -1
   protected val defense: Int = 1
   protected val evasion: Int = -1
 
-  protected val name: String = "RoboBall"
+  protected val extraStars: Int = 2
+  protected val extraVictories: Int = 1
+
+  //Updatable statistics
   protected var hp: Int = maxHp
   protected var starsAmount: Int = 0
   protected var victories: Int = 0
+
 }

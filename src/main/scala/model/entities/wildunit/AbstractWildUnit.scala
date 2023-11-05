@@ -1,145 +1,58 @@
 package cl.uchile.dcc.citric
 package model.entities.wildunit
+import model.entities.{AbstractCharacter, GameCharacter}
+import model.entities.character.PlayerCharacter
 import scala.util.Random
-import model.entities.GameCharacter
 
-import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
-/** This abstract class is responsible for encapsulating all common aspects of WildUnits.
- * The inherited methods of GameCharacter are defined, primarily getters and setters;
- * furthermore, the variables that each of the WildUnits will have are also defined.
- *
- * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
- * */
-abstract class AbstractWildUnit extends GameCharacter{
-  /** The maximum health points a WildUnit can have. It represents the WildUnit's endurance. */
-  protected val maxHp: Int
-  /** The WildUnit's capability to deal damage to opponents. */
-  protected val attack: Int
-  /** The WildUnit's capability to resist or mitigate damage from opponents. */
-  protected val defense: Int
-  /** The WildUnit's skill to completely avoid certain attacks. */
-  protected val evasion: Int
-  /** The name of a WildUnit */
-  protected val name: String
-  /** WildUnit's hit points that will change throughout the match. */
-  protected var hp: Int
-  /** The number of stars the WildUnit has collected. */
-  protected var starsAmount: Int
-  /** The number of victories that WildUnit has been accumulating. */
-  protected var victories: Int
+abstract class AbstractWildUnit extends AbstractCharacter with WildUnit {
 
-  //------GETTERS----------
-  def getName: String = name
+  /** The extra number of stars that a wild unit delivers when defeated */
+  def getExtraStars: Int = extraStars
+  /** The number of wins that a wild unit delivers when defeated */
+  def getExtraVictories: Int = extraVictories
 
-  def getMaxHp: Int = maxHp
-
-  def getAttack: Int = attack
-
-  def getDefense: Int = defense
-
-  def getEvasion: Int = evasion
-
-  def getHp: Int = hp
-
-  def getStarsAmount: Int = starsAmount
-
-
-  //------SETTERS AND MORE.----------
-
-  //------HIT POINTS------------
-  /** Set the hit points of the character on a specific amount.
+  /** Method responsible for handling the case when a WildUnit is attacked.
+   * Here, we generate the attack value and use a random number to
+   * determine the WildUnit's response (defend or evade).
    *
-   * @param hp the new amount of hit points to establish.
+   * @param character the character that is attacking the WildUnit.
    * */
-  protected def setHp(hp: Int): Unit = {
-    if (hp > maxHp) {
-      this.hp = maxHp
+  def attacked(character: GameCharacter): Unit = {
+    val atk: Int = character.getAttack
+    val random: Random = new Random()
+    val response: Int = random.nextInt(2) + 1
+    if (response == 1) {
+      this.defend(atk)
+    } else {
+      this.evade(atk)
     }
-    if (hp == 0) {
-      this.hp = 0
-      enCombate = false
-    }
-    else
-      this.hp = hp
-  }
-
-  def damage(hp: Int): Unit = {
-    val newHp = Math.max(this.hp - hp, 0)
-    setHp(newHp)
-    if (newHp == 0) {
-      enCombate = false
+    if (this.getHp == 0) {
+      character.defeatWildUnit(this)
     }
   }
 
-  //------------STARS------------
-
-  /** Set the amount of stars the player has.
+  //Para los siguientes metodos, this es una wildUnit.
+  /** Method responsible for distributing the number of stars and wins to the
+   * character who defeats a Wild Unit.
    *
-   * @param starsAmount the new amount of stars to establish.
+   * @param wildUnit the Wild Unit that is defeated.
    * */
-  protected def setStars(starsAmount: Int): Unit = {
-    this.starsAmount = starsAmount
+  def defeatWildUnit(wildUnit: WildUnit): Unit = {
+    //We give stars to the Character
+    wildUnit.enCombate = false
+    this.starsAmount += wildUnit.getStarsAmount + wildUnit.getExtraStars
   }
 
-  /** Increases the number of stars by a given amount.
+  /** Method responsible for distributing the number of stars and wins to the
+   * character who defeats a Player Character
    *
-   * @param amount the amount of stars to add.
-   * @return the amount of stars the WildUnit has.
+   * @param playerCharacter the Player Character that is defeated.
    * */
-  def starBonus(amount: Int): Unit = {
-    setStars(getStarsAmount + amount)
-  }
-
-  /** Decreases the number of stars by a given amount.
-   *
-   * @param amount the amount of stars to add.
-   * @return the amount of stars the WildUnit has.
-   * */
-  def starDrop(amount: Int): Unit = {
-    if (starsAmount - amount < 0) {
-      setStars(0)
-    }
-    else
-      setStars(getStarsAmount - amount)
-  }
-
-  /** Rolls a dice and returns a value between 1 to 6.
-   *
-   * @return a random number between 1 and 6.
-   * */
-  def rollDice(): Int = {
-    val randomNumberGenerator: Random = new Random()
-    randomNumberGenerator.nextInt(6) + 1
-  }
-
-  def ataque(enemy: GameCharacter): Int = {
-    if (this.enCombate && enemy.enCombate){
-      val atk_vs = this.rollDice() + this.getAttack
-      atk_vs
-    }
-    else {
-      0
-    }
-  }
-
-  def defend(atk_vs: Int): Unit = {
-    val expresion: Int = this.rollDice() + this.getAttack - (this.rollDice() + this.getDefense)
-    if (1 > expresion) {
-      this.setHp(this.getHp - 1)
-    }
-    else {
-      this.setHp(this.getHp - expresion)
-    }
-  }
-
-  def evade(atk_vs: Int): Unit = {
-    val expresion1: Int = this.rollDice() + this.getEvasion
-    val expresion2: Int = this.rollDice() + this.getAttack
-    if (expresion1 > expresion2) {
-      this.setHp(this.getHp)
-    }
-    else {
-      this.setHp(this.getHp - atk_vs)
-    }
+  def defeatPlayerCharacter(playerCharacter: PlayerCharacter): Unit = {
+    //We give stars to the Character
+    this.starsAmount += playerCharacter.getStarsAmount/2
+    //We take stars from the playerCharacter
+    playerCharacter.enCombate = false
+    playerCharacter.starDrop(playerCharacter.getStarsAmount/2)
   }
 }

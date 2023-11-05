@@ -19,15 +19,38 @@ import scala.collection.mutable.ArrayBuffer
   *
   * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
   */
-
 class HomePanel extends AbstractPanels {
 
   /** The type of panel. */
   val panelType: String = "Home"
-  private var owner: PlayerCharacter = _
+  protected var owner: PlayerCharacter = _
 
-  def apply(player: PlayerCharacter): Unit = {
-    print("HomePanel activated")
+  /** Method that sets the owner of the panel. */
+  def setOwner(player: PlayerCharacter): Unit = {
+    owner = player
   }
+
+  /** Method that returns the owner of the panel. */
+  def getOwner: PlayerCharacter = {
+    owner
+  }
+
+  /** Method responsible for applying the effects of each panel on the player.
+   *
+   * The method call depends on the panel.
+   * @param player The player character who will receive the effects of the panel
+   * */
+  def apply(player: PlayerCharacter): Unit = {
+    //We heal the player 1 hp
+    if(player.getHp < player.getMaxHp) {
+      player.heal(1)
+    }
+    //We check if the player can level up
+    if(player.normaCheck()) {
+      player.normaClear()
+    }
+
+  }
+
 
 }

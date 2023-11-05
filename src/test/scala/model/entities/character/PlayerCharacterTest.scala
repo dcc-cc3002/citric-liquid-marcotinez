@@ -1,5 +1,6 @@
 package cl.uchile.dcc.citric
 package model.entities.character
+import cl.uchile.dcc.citric.model.entities.wildunit.{Chicken, RoboBall, Seagull}
 
 import scala.util.Random
 
@@ -44,8 +45,8 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(character.getMaxHp, maxHp)
     assertEquals(character.getAttack, attack)
     assertEquals(character.getDefense, defense)
-    assertEquals(character.getEvasion, evasion)
     assertEquals(character.getNormaLevel, 1)
+    assertEquals(character.getEvasion, evasion)
     assertEquals(character.getStarsAmount, 0)
     assertEquals(character.getVictories,0)
   }
@@ -70,11 +71,22 @@ class PlayerCharacterTest extends munit.FunSuite {
     }
   }
 
+  test("A player have a initial norma level equal to 1") {
+    assertEquals(character.getNormaLevel, 1)
+  }
+
   test("A player can increase their norma level") {
-    character.normaClear()
-    assertEquals(character.getNormaLevel, 2)
-    character.normaClear()
-    assertEquals(character.getNormaLevel, 3)
+    val player = new PlayerCharacter("test", maxHp, attack, defense, evasion, randomNumberGenerator)
+    player.normaClear()
+    assertEquals(player.getNormaLevel, 2)
+    player.normaClear()
+    assertEquals(player.getNormaLevel, 3)
+    player.normaClear()
+    assertEquals(player.getNormaLevel, 4)
+    player.normaClear()
+    assertEquals(player.getNormaLevel, 5)
+    player.normaClear()
+    assertEquals(player.getNormaLevel, 6)
   }
 
   test("A player can increase their stars count in a given amount") {
@@ -107,8 +119,13 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(character.getHp, 10)
   }
 
-  test("A player can damage their hp"){
+  test("A player can back to combat after healing"){
+    character.damage(10)
+    character.heal(5)
+    assertEquals(character.enCombate, true)
+  }
 
+  test("A player can damage their hp"){
     character.damage(5)
     assertEquals(character.getHp, 5)
   }
@@ -121,5 +138,78 @@ class PlayerCharacterTest extends munit.FunSuite {
   test("A player can't have negative hp"){
     character.damage(100)
     assertEquals(character.getHp, 0)
+  }
+
+  test("A player can only attack a character in combat"){
+    val other = new PlayerCharacter("other", maxHp, attack, defense, evasion, randomNumberGenerator)
+    assertNotEquals(character.ataque(other), 0)
+    other.damage(100) //enCombate = False
+    assertEquals(character.ataque(other), 0)
+  }
+
+  test("A player can be attacked by a Character, and it will defend or evade randomly (por ahora)") {
+    val goku = new PlayerCharacter("goku", maxHp, attack, defense, evasion, randomNumberGenerator)
+    val other = new PlayerCharacter("other", maxHp, attack, defense, evasion, randomNumberGenerator)
+    for (_ <- 1 to 10) {
+      other.ataque(goku)
+      assert( goku.getHp <= 10 || goku.getHp >= 0)
+    }
+  }
+
+  test("A player can defend an attack"){
+    val ataque: Int = 3
+    val other = new PlayerCharacter("other", maxHp, attack, defense, evasion, randomNumberGenerator)
+    other.defend(ataque)
+    assert(other.getHp < maxHp)
+  }
+
+  test("A player can evade an attack"){
+    val ataque: Int = 3
+    val other = new PlayerCharacter("other", maxHp, attack, defense, evasion, randomNumberGenerator)
+    other.evade(ataque)
+    assertEquals(other.getHp, maxHp-ataque)
+  }
+
+  test("A player can defeat a Chicken") {
+    val chicken = new Chicken
+    character.defeatWildUnit(chicken)
+    assertEquals(character.getStarsAmount, 3)
+    assertEquals(character.getVictories, 1)
+  }
+
+  test("A player can defeat a seaGull") {
+    val seaGull = new Seagull
+    character.defeatWildUnit(seaGull)
+    assertEquals(character.getStarsAmount, 2)
+    assertEquals(character.getVictories, 1)
+  }
+
+  test("A player can defeat a RoboBall") {
+    val roboBall = new RoboBall
+    character.defeatWildUnit(roboBall)
+    assertEquals(character.getStarsAmount, 2)
+    assertEquals(character.getVictories, 1)
+  }
+
+  test("A player can defeat another player") {
+    val other = new PlayerCharacter("other", maxHp, attack, defense, evasion, randomNumberGenerator)
+    other.starBonus(10)
+    character.defeatPlayerCharacter(other)
+    assertEquals(character.getStarsAmount, 5)
+    assertEquals(character.getVictories, 2)
+    assertEquals(other.getStarsAmount, 5)
+  }
+
+  test("We can set the victories of a player") {
+    val player = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
+    player.setVictories(10)
+    assertEquals(player.getVictories, 10)
+  }
+
+  test("We can check the norma of a player ") {
+    val player = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
+    assertEquals(player.normaCheck(), false)
+    player.starBonus(10)
+    assertEquals(player.normaCheck(), true)
   }
 }

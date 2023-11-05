@@ -1,5 +1,8 @@
 package cl.uchile.dcc.citric
 package model.entities
+import model.entities.wildunit.WildUnit
+
+import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 
 
 /** Represents any unit present in the game (WildUnits and playerCharacters).
@@ -25,9 +28,6 @@ trait GameCharacter {
 
   /** Returns the character's evasion points. */
   def getEvasion: Int
-
-  /** Returns the character's name. */
-  def getName: String
 
   /** Returns the character's maximum hit points. */
   def getMaxHp: Int
@@ -68,4 +68,22 @@ trait GameCharacter {
 
   /** RollDice method defined for the GameCharacter */
   def rollDice(): Int
+
+
+  //------------Double Dispatch Combat------------------
+
+  def attacked(character: GameCharacter): Unit
+  /** Method responsible for distributing the number of stars and wins to the
+   * character who defeats a Wild Unit
+   *
+   * @param wildUnit the Wild Unit that is defeated.
+   * */
+  def defeatWildUnit(wildUnit: WildUnit): Unit
+
+  /** Method responsible for distributing the number of stars and wins to the
+   * character who defeats a Player Character
+   *
+   * @param playerCharacter the Player Character that is defeated.
+   * */
+  def defeatPlayerCharacter(playerCharacter: PlayerCharacter): Unit
 }
