@@ -1,7 +1,6 @@
 package cl.uchile.dcc.citric
 package model.panels
 
-import cl.uchile.dcc.citric.model.Panel
 import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 import cl.uchile.dcc.citric.model.entities.wildunit.WildUnit
 import munit.FunSuite

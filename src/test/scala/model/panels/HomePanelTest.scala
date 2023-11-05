@@ -1,6 +1,5 @@
 package cl.uchile.dcc.citric
 package model.panels
-import model.Panel
 import model.entities.character.PlayerCharacter
 import model.norma.objective.Wins
 import munit.FunSuite

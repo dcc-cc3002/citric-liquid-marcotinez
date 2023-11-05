@@ -1,7 +1,8 @@
 package cl.uchile.dcc.citric
-package model
+package model.panels
 
-import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
+import model.entities.character.PlayerCharacter
+
 import scala.collection.mutable.ArrayBuffer
 
 /** This abstract class is responsible for encapsulating all the common aspects of panels.
