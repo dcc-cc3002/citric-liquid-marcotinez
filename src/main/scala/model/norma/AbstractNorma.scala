@@ -2,7 +2,7 @@ package cl.uchile.dcc.citric
 package model.norma
 
 import model.entities.character.PlayerCharacter
-import model.norma.objective.{State, Wins, Stars}
+import model.norma.objective.{Objective, Wins, Stars}
 
 /** This abstract class is responsible for encapsulating all the common aspects of Normas.
  *
@@ -17,10 +17,10 @@ abstract class AbstractNorma extends Norma {
   /** Returns the number of victories required to advance to the next norma level. */
   def getWins: Int = wins
   /** Returns the objective selected by the player to increase their Norma level. */
-  def getObjective: State = objective
+  def getObjective: Objective = objective
 
   /** We define a default value to objective */
-  var objective: State = new Stars
+  var objective: Objective = new Stars
 
   /** This method is responsible for performing the levelUp check
    * based on the objective selected by the player

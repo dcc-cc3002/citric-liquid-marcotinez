@@ -46,12 +46,16 @@ abstract class AbstractPanels extends Panel {
   }
 
   /** Method responsible for returning the characters that are currently on the panel. */
-  override def getCharacters: ArrayBuffer[PlayerCharacter] = {
-    characters.clone()
+  override def getCharacters: List[PlayerCharacter] = {
+    val newCharacters: Array[PlayerCharacter] = new Array[PlayerCharacter](characters.length)
+    characters.copyToArray(newCharacters)
+    newCharacters.toList
   }
 
   /** Method responsible for returning the next panels that are directly connected to this one. */
-  override def getNextPanels: ArrayBuffer[Panel] = {
-    nextPanels.clone()
+  override def getNextPanels: List[Panel] = {
+    val newNextPanels: Array[Panel] = new Array[Panel](nextPanels.length)
+    nextPanels.copyToArray(newNextPanels)
+    newNextPanels.toList
   }
 }

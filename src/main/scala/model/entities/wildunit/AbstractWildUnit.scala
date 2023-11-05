@@ -4,12 +4,17 @@ import model.entities.{AbstractCharacter, GameCharacter}
 import model.entities.character.PlayerCharacter
 import scala.util.Random
 
+/** This abstract class is responsible for encapsulating all the common aspects of WildUnits.
+ *
+ *
+ * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
+ * */
 abstract class AbstractWildUnit extends AbstractCharacter with WildUnit {
 
   /** The extra number of stars that a wild unit delivers when defeated */
   def getExtraStars: Int = extraStars
   /** The number of wins that a wild unit delivers when defeated */
-  def getExtraVictories: Int = extraVictories
+  def getVictories: Int = extraVictories
 
   /** Method responsible for handling the case when a WildUnit is attacked.
    * Here, we generate the attack value and use a random number to
@@ -18,9 +23,9 @@ abstract class AbstractWildUnit extends AbstractCharacter with WildUnit {
    * @param character the character that is attacking the WildUnit.
    * */
   def attacked(character: GameCharacter): Unit = {
-    val atk: Int = character.getAttack
     val random: Random = new Random()
     val response: Int = random.nextInt(2) + 1
+    val atk: Int = character.getAttack
     if (response == 1) {
       this.defend(atk)
     } else {

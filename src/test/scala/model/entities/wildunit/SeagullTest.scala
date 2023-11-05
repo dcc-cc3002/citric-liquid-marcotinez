@@ -14,7 +14,7 @@ class SeagullTest extends munit.FunSuite {
     assertEquals(seagull.getDefense, -1)
     assertEquals(seagull.getEvasion, -1)
     assertEquals(seagull.getExtraStars, 2)
-    assertEquals(seagull.getExtraVictories, 1)
+    assertEquals(seagull.getVictories, 1)
     assertEquals(seagull.getStarsAmount, 0)
   }
 

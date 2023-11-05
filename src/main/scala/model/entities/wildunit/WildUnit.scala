@@ -17,5 +17,5 @@ trait WildUnit extends GameCharacter {
   /** The number of wins that a wild unit delivers when defeated */
   protected val extraVictories: Int
   /** Returns the number of wins that a wild unit delivers when defeated */
-  def getExtraVictories: Int
+  def getVictories: Int
 }

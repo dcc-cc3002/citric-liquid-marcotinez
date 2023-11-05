@@ -8,9 +8,18 @@ import model.norma.Norma
  *
  * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
  * */
-class Stars extends State {
+class Stars extends Objective {
+  /** Method responsible for checking if the player meets the necessary conditions
+   * to advance to the next Norma.
+   *
+   * @param player   the player to check.
+   * @param normaLvl the current norma level of the player.
+   * */
   def levelUp(player: PlayerCharacter, normaLvl: Norma): Boolean = {
-    if (player.getStarsAmount >= normaLvl.getStars) {
+    val playerStars: Int = player.getStarsAmount
+    val normaStars: Int = normaLvl.getStars
+    //The player can increase the level of their Norma using Stars
+    if (playerStars >= normaStars) {
       true
     }
     else false

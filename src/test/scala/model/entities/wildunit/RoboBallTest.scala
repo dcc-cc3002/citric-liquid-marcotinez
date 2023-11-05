@@ -14,7 +14,7 @@ class RoboBallTest extends munit.FunSuite {
     assertEquals(roboBall.getDefense, 1)
     assertEquals(roboBall.getEvasion, -1)
     assertEquals(roboBall.getExtraStars, 2)
-    assertEquals(roboBall.getExtraVictories, 1)
+    assertEquals(roboBall.getVictories, 1)
     assertEquals(roboBall.getStarsAmount, 0)
   }
 

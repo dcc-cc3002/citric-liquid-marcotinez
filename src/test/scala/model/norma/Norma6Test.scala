@@ -9,6 +9,6 @@ class Norma6Test extends munit.FunSuite{
     assertEquals(norma.getLevel, 6)
     assertEquals(norma.getStars, 0)
     assertEquals(norma.getWins, 0)
-    assertEquals(norma.nextNorma.getLevel, 6)
+    assertEquals(norma.nextNormaLevel.getLevel, 6)
   }
 }

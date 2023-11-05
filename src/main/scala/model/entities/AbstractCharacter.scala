@@ -1,6 +1,5 @@
 package cl.uchile.dcc.citric
 package model.entities
-import model.entities.wildunit.WildUnit
 
 import scala.util.Random
 

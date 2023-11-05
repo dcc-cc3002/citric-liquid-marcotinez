@@ -1,8 +1,7 @@
 package cl.uchile.dcc.citric
 package model.entities
 import model.entities.wildunit.WildUnit
-
-import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
+import model.entities.character.PlayerCharacter
 
 
 /** Represents any unit present in the game (WildUnits and playerCharacters).

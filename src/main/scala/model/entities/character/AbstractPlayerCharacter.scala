@@ -1,8 +1,13 @@
 package cl.uchile.dcc.citric
 package model.entities.character
-import model.entities.{AbstractCharacter, GameCharacter}
+import model.entities.AbstractCharacter
 import model.entities.wildunit.WildUnit
 
+/** This abstract class is responsible for encapsulating all the common aspects of PlayerCharacters.
+ *
+ *
+ * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
+ * */
 abstract class AbstractPlayerCharacter extends AbstractCharacter {
   /** The name of the player. */
   protected val name: String
@@ -39,7 +44,7 @@ abstract class AbstractPlayerCharacter extends AbstractCharacter {
   def defeatWildUnit(wildUnit: WildUnit): Unit = {
     wildUnit.enCombate = false
     this.setStars(this.starsAmount + wildUnit.getStarsAmount + wildUnit.getExtraStars)
-    this.victories += wildUnit.getExtraVictories
+    this.victories += wildUnit.getVictories
   }
 
   /** Method responsible for distributing the number of stars and wins to the

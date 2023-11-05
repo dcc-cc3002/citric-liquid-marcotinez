@@ -1,8 +1,6 @@
 package cl.uchile.dcc.citric
 package model.entities.wildunit
 
-import model.entities.{AbstractCharacter, GameCharacter}
-
 /** A class representing the WildUnit RoboBall.
  *
  * This class represents the WildUnit RoboBall, which is a type of enemy that can be found

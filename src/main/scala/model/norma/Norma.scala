@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.norma
 
-import model.norma.objective.State
+import model.norma.objective.Objective
 import model.entities.character.PlayerCharacter
 
 /** This represents any Norma present in the game (Norma level 1, Norma level 2, etc).
@@ -27,15 +27,15 @@ trait Norma {
   def getWins: Int
 
   /** The objective selected by the player to increase their Norma level. */
-  protected var objective: State
+  protected var objective: Objective
 
   /** Returns the objective selected by the player to increase their Norma level. */
-  def getObjective: State
+  def getObjective: Objective
 
   /** The value of nextNorma is unique for each Norma since it indicates
    *  the next rule level.
    */
-  val nextNorma: Norma
+  val nextNormaLevel: Norma
 
   /** This method is responsible for performing the levelUp check
    * based on the objective selected by the player
@@ -46,7 +46,7 @@ trait Norma {
 
   /** I know is not a good design to define method on traits, but I needed this
    * to test the different states */
-  def setObjetive(obj: State): Unit = {
+  def setObjetive(obj: Objective): Unit = {
     this.objective = obj
   }
 }

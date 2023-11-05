@@ -17,7 +17,7 @@ class ChickenTest extends munit.FunSuite {
     assertEquals(chicken.getDefense, -1)
     assertEquals(chicken.getEvasion, 1)
     assertEquals(chicken.getExtraStars, 3)
-    assertEquals(chicken.getExtraVictories, 1)
+    assertEquals(chicken.getVictories, 1)
     assertEquals(chicken.getStarsAmount, 0)
   }
 

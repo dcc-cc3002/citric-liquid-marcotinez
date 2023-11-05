@@ -27,6 +27,8 @@ en estas dos ultimas se implementó el double dispatch para la entrega de estrel
 - El modo recovery no se implementó aún, ya que no aparecía en la entrega, de todas formas existe la variable booleana "enCombate",
 que se utiliza para saber si la unidad está disponible para el combate o no (muerta :$).
 - El neutral Panel quedó con el metodo apply vacio.
+- Se fixeo el getter de los ArrayBuffer, ahora deberían retornar una copia no mutable correctamente.
+- 
 
 
 <div style="text-align:center;">

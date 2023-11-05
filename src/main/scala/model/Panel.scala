@@ -57,7 +57,7 @@ trait Panel {
    * @return an array of PlayerCharacter instances that are currently on this panel.
    *
    * */
-  def getCharacters: ArrayBuffer[PlayerCharacter]
+  def getCharacters: List[PlayerCharacter]
 
   /** Returns the next panels that are directly connected to this one.
    *
@@ -66,7 +66,7 @@ trait Panel {
    *
    * @return a List of Panel instances that are adjacent or connected to this panel.
    */
-  def getNextPanels: ArrayBuffer[Panel]
+  def getNextPanels: List[Panel]
 
   /** add a NextPanel to the list of nextPanels of this panel.
    *

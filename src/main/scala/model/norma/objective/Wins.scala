@@ -8,9 +8,18 @@ import model.norma.Norma
  *
  * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
  * */
-class Wins extends State {
+class Wins extends Objective {
+  /** Method responsible for checking if the player meets the necessary conditions
+   * to advance to the next Norma.
+   *
+   * @param player   the player to check.
+   * @param normaLvl the current norma level of the player.
+   * */
   def levelUp(player: PlayerCharacter, normaLvl: Norma): Boolean = {
-    if (player.getVictories >= normaLvl.getWins) {
+    val playerWins: Int = player.getVictories
+    val normaWins: Int = normaLvl.getWins
+    //The player can increase the level of their Norma using Wins
+    if (playerWins >= normaWins) {
       true
     }
     else false

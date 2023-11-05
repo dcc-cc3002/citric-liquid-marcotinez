@@ -34,29 +34,29 @@ class HomePanelTest extends FunSuite {
     assertEquals(homePanel.characters, ArrayBuffer.empty[PlayerCharacter])
     homePanel.addCharacter(testPlayer1)
     val actualCharacters = homePanel.getCharacters
-    assertEquals(actualCharacters, ArrayBuffer(testPlayer1))
+    assertEquals(actualCharacters, List(testPlayer1))
     homePanel.addCharacter(testPlayer2)
     val actualCharacters2 = homePanel.getCharacters
-    assertEquals(actualCharacters2, ArrayBuffer(testPlayer1, testPlayer2))
+    assertEquals(actualCharacters2, List(testPlayer1, testPlayer2))
   }
 
   test("A player can be removed from a panel") {
     assertEquals(homePanel.characters, ArrayBuffer.empty[PlayerCharacter])
     homePanel.addCharacter(testPlayer1)
     val actualCharacters = homePanel.getCharacters
-    assertEquals(actualCharacters, ArrayBuffer(testPlayer1))
+    assertEquals(actualCharacters, List(testPlayer1))
     homePanel.removeCharacter(testPlayer1)
     val actualCharacters2 = homePanel.getCharacters
-    assertEquals(actualCharacters2, ArrayBuffer.empty[PlayerCharacter])
+    assertEquals(actualCharacters2, List.empty[PlayerCharacter])
   }
 
   test("Each panel can be occupied by one or more players, but not the same player twice") {
     assertEquals(homePanel.characters, ArrayBuffer.empty[PlayerCharacter])
     homePanel.addCharacter(testPlayer1)
     val onlyPlayer = homePanel.getCharacters
-    assertEquals(onlyPlayer, ArrayBuffer(testPlayer1))
+    assertEquals(onlyPlayer, List(testPlayer1))
     homePanel.addCharacter(testPlayer1)
-    assertEquals(onlyPlayer, ArrayBuffer(testPlayer1))
+    assertEquals(onlyPlayer, List(testPlayer1))
   }
 
   test("Each panel has one or more following panels") {
@@ -69,28 +69,28 @@ class HomePanelTest extends FunSuite {
     //caso 1: panel solo un panel adyacente
     val testPanel: HomePanel = new HomePanel()
     testPanel.addNextPanel(bonusPanel)
-    assertEquals(testPanel.getNextPanels, ArrayBuffer[Panel](bonusPanel))
+    assertEquals(testPanel.getNextPanels, List[Panel](bonusPanel))
 
     //caso 2: panel con varios paneles adyacentes
     val testPanel2: HomePanel = new HomePanel()
     testPanel2.addNextPanel(bonusPanel)
-    assertEquals(testPanel2.getNextPanels, ArrayBuffer[Panel](bonusPanel))
+    assertEquals(testPanel2.getNextPanels, List[Panel](bonusPanel))
     testPanel2.addNextPanel(dropPanel)
-    assertEquals(testPanel2.getNextPanels, ArrayBuffer[Panel](bonusPanel, dropPanel))
+    assertEquals(testPanel2.getNextPanels, List[Panel](bonusPanel, dropPanel))
     testPanel2.addNextPanel(encounterPanel)
-    assertEquals(testPanel2.getNextPanels, ArrayBuffer[Panel](bonusPanel, dropPanel, encounterPanel))
+    assertEquals(testPanel2.getNextPanels, List[Panel](bonusPanel, dropPanel, encounterPanel))
     testPanel2.addNextPanel(homePanel)
-    assertEquals(testPanel2.getNextPanels, ArrayBuffer[Panel](bonusPanel, dropPanel, encounterPanel, homePanel))
+    assertEquals(testPanel2.getNextPanels, List[Panel](bonusPanel, dropPanel, encounterPanel, homePanel))
     testPanel2.addNextPanel(neutralPanel)
-    assertEquals(testPanel2.getNextPanels, ArrayBuffer[Panel](bonusPanel, dropPanel, encounterPanel, homePanel, neutralPanel))
+    assertEquals(testPanel2.getNextPanels, List[Panel](bonusPanel, dropPanel, encounterPanel, homePanel, neutralPanel))
   }
 
   test("A Next panel can be removed of a panel.") {
     val testPanel: HomePanel = new HomePanel()
     testPanel.addNextPanel(homePanel)
-    assertEquals(testPanel.getNextPanels, ArrayBuffer[Panel](homePanel))
+    assertEquals(testPanel.getNextPanels, List[Panel](homePanel))
     testPanel.removeNextPanel(homePanel)
-    assertEquals(testPanel.getNextPanels, ArrayBuffer.empty[Panel])
+    assertEquals(testPanel.getNextPanels, List.empty[Panel])
   }
 
   test("the panel can apply something") {

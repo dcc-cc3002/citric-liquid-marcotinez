@@ -7,5 +7,5 @@ class Norma1 extends AbstractNorma {
   override protected val level: Int = 1
   override protected val stars: Int = 10
   override protected val wins: Int = 1
-  override val nextNorma: Norma = new Norma2
+  override val nextNormaLevel: Norma = new Norma2
 }

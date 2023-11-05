@@ -80,7 +80,7 @@ class PlayerCharacter(override protected val name: String,
   }
   /** Method responsible for increasing the norma level. */
   def normaClear(): Unit = {
-    this.normaLevel = this.normaLevel.nextNorma
+    this.normaLevel = this.normaLevel.nextNormaLevel
   }
 
   /** Method created specifically for testing. */

@@ -10,7 +10,7 @@ import model.norma.Norma
  *
  * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
  * */
-trait State {
+trait Objective {
   /** Method responsible for checking if the player meets the necessary conditions
    * to advance to the next Norma.
    *
