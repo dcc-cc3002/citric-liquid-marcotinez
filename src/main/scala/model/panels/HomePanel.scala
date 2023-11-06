@@ -41,10 +41,12 @@ class HomePanel extends AbstractPanels {
    * */
   def apply(player: PlayerCharacter): Unit = {
     //We heal the player 1 hp
-    player.heal(1)
-    //We check if the player can level up
-    if(player.normaCheck()) {
-      player.normaClear()
+    if(player == owner) {
+      player.heal(1)
+      //We check if the player can level up
+      if (player.normaCheck()) {
+        player.normaClear()
+      }
     }
 
   }

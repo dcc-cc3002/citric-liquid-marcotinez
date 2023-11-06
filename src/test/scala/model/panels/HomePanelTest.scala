@@ -101,6 +101,7 @@ class HomePanelTest extends FunSuite {
 
   test("A player can active the panel and be heal") {
     val player = new PlayerCharacter("player", 10, 1, 1, 1, new Random(11))
+    homePanel.setOwner(player)
     player.damage(5)
     assertEquals(player.getHp, 5)
     homePanel.apply(player)
@@ -109,6 +110,7 @@ class HomePanelTest extends FunSuite {
 
   test("A player can increase their norma level with stars") {
     val player = new PlayerCharacter("player", 10, 1, 1, 1, new Random(11))
+    homePanel.setOwner(player)
     player.starBonus(10)
     homePanel.apply(player)
     assertEquals(player.getNormaLevel, 2)
@@ -116,6 +118,7 @@ class HomePanelTest extends FunSuite {
 
   test("A player can increase their norma level with wins") {
     val player = new PlayerCharacter("player", 10, 1, 1, 1, new Random(11))
+    homePanel.setOwner(player)
     player.setVictories(1)
     player.getNorma.setObjetive(new Wins)
     homePanel.apply(player)
