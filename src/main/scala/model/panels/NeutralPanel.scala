@@ -21,6 +21,6 @@ class NeutralPanel extends AbstractPanels {
    * @param player The player character who will receive the effects of the panel
    * */
   def apply(player: PlayerCharacter): Unit = {
-    //Do nothing
+    // Do nothing
   }
 }

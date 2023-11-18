@@ -89,7 +89,6 @@ class NeutralPanelTest extends FunSuite {
   test("the panel can apply something") {
     val testPanel: NeutralPanel = new NeutralPanel()
     val other: PlayerCharacter = new PlayerCharacter("other", 10, 1, 1, 1, new Random(11))
-    val texto: String = "Encounter activated"
-    assertEquals(testPanel.apply(other), print("NeutralPanel activated"))
+    assertEquals(testPanel.apply(other), ())
   }
 }
