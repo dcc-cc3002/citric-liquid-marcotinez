@@ -29,7 +29,16 @@ class GameController {
   def evade(): Unit = state.evade()
   def defend(): Unit = state.defend()
 
-
+  //States
+  def isChapter: Boolean = state.isChapter
+  def isCombat: Boolean = state.isCombat
+  def isEndGame: Boolean = state.isEndGame
+  def isLandingPanel: Boolean = state.isLandingPanel
+  def isMoving: Boolean = state.isMoving
+  def isPlayerTurn: Boolean = state.isPlayerTurn
+  def isPregame: Boolean = state.isPregame
+  def isRecovery: Boolean = state.isRecovery
+  def isWait: Boolean = state.isWait
 
 
 }
