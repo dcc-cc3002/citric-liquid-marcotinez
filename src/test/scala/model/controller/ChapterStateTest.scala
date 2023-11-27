@@ -82,5 +82,4 @@ class ChapterStateTest extends munit.FunSuite {
       chapterState.attack()
     }
   }
-
 }

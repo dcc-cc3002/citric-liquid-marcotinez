@@ -3,7 +3,7 @@ package model.entities.character
 
 import model.entities.GameCharacter
 import model.norma.Norma
-import cl.uchile.dcc.citric.model.norma.normalevels.{Norma1, Norma2, Norma3, Norma4, Norma5, Norma6}
+import model.norma.normalevels.Norma1
 
 import scala.util.Random
 

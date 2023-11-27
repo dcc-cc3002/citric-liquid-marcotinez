@@ -59,4 +59,16 @@ class GameControllerTest extends munit.FunSuite {
     gameController.outOfMovements()
     assert(gameController.state.isInstanceOf[CombatState])
   }
+
+  test("We know the states") {
+    assert(!gameController.isChapter)
+    assert(!gameController.isCombat)
+    assert(!gameController.isEndGame)
+    assert(!gameController.isLandingPanel)
+    assert(!gameController.isMoving)
+    assert(!gameController.isPlayerTurn)
+    assert(gameController.isPregame)
+    assert(!gameController.isRecovery)
+    assert(!gameController.isWait)
+  }
 }
