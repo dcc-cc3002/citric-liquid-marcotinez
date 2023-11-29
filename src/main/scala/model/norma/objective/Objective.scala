@@ -17,5 +17,5 @@ trait Objective {
    * @param player the player to check.
    * @param normaLvl the current norma level of the player.
    * */
-  def levelUp(player: PlayerCharacter, normaLvl: Norma): Boolean
+  def levelUp(player: PlayerCharacter, normaLvl: Norma): Unit
 }

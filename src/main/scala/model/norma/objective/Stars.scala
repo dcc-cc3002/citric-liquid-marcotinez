@@ -15,13 +15,12 @@ class Stars extends Objective {
    * @param player   the player to check.
    * @param normaLvl the current norma level of the player.
    * */
-  def levelUp(player: PlayerCharacter, normaLvl: Norma): Boolean = {
+  def levelUp(player: PlayerCharacter, normaLvl: Norma): Unit = {
     val playerStars: Int = player.getStarsAmount
     val normaStars: Int = normaLvl.getStars
     //The player can increase the level of their Norma using Stars
     if (playerStars >= normaStars) {
-      true
+      player.normaClear()
     }
-    else false
   }
 }

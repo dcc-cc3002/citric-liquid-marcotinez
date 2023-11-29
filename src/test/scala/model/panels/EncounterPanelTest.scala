@@ -89,7 +89,7 @@ class EncounterPanelTest extends FunSuite {
 
   test("Each panel has a random WildUnit") {
     for (_ <- 1 to 10) {
-      assert(encounterPanel.obtenerWildUnit().isInstanceOf[WildUnit])
+      assert(encounterPanel.getRandomWildUnit().isInstanceOf[WildUnit])
     }
   }
 

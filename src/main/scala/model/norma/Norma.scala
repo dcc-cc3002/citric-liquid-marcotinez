@@ -35,7 +35,7 @@ trait Norma {
    *
    * @param player the player to check.
    * */
-  def normaCheck(player: PlayerCharacter): Boolean
+  def normaCheck(player: PlayerCharacter): Unit
 
   /** I know is not a good design to define method on traits, but I needed this
    * to test the different states */

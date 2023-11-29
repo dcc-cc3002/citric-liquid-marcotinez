@@ -15,13 +15,12 @@ class Wins extends Objective {
    * @param player   the player to check.
    * @param normaLvl the current norma level of the player.
    * */
-  def levelUp(player: PlayerCharacter, normaLvl: Norma): Boolean = {
+  def levelUp(player: PlayerCharacter, normaLvl: Norma): Unit = {
     val playerWins: Int = player.getVictories
     val normaWins: Int = normaLvl.getWins
     //The player can increase the level of their Norma using Wins
     if (playerWins >= normaWins) {
-      true
+      player.normaClear()
     }
-    else false
   }
 }

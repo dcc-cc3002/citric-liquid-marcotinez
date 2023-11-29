@@ -44,12 +44,7 @@ class HomePanel extends AbstractPanels {
     if(player == owner) {
       player.heal(1)
       //We check if the player can level up
-      if (player.normaCheck()) {
-        player.normaClear()
+      player.normaCheck()
       }
     }
-
-  }
-
-
 }

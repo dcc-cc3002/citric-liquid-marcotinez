@@ -16,6 +16,7 @@ class EncounterPanel extends AbstractPanels {
 
   /** The type of panel. */
   val panelType: String = "Encounter"
+  var enemy: WildUnit = getRandomWildUnit
 
   /** ArrayBuffer containing the 3 available WildUnits.
    *
@@ -29,12 +30,14 @@ class EncounterPanel extends AbstractPanels {
    * @return A random WildUnit
    *
    * */
-  def obtenerWildUnit(): WildUnit = {
+  def getRandomWildUnit: WildUnit = {
     val index = Random.nextInt(wildunits.length)
     wildunits(index)
   }
 
   def apply(player: PlayerCharacter): Unit = {
-    print("Encounter activated")
+    if(!enemy.enCombate) {
+      enemy = getRandomWildUnit
+    }
   }
 }

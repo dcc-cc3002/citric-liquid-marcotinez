@@ -25,7 +25,7 @@ abstract class AbstractNorma extends Norma {
    *
    * @param player the player to check.
    * */
-  def normaCheck(player: PlayerCharacter): Boolean = {
+  def normaCheck(player: PlayerCharacter): Unit = {
     objective.levelUp(player, this)
   }
 
