@@ -64,7 +64,7 @@ abstract class AbstractCharacter extends GameCharacter  {
    *
    * @param starsAmount the new amount of stars to establish.
    * */
-  protected def setStars(starsAmount: Int): Unit = {
+  def setStars(starsAmount: Int): Unit = {
       this.starsAmount = starsAmount
   }
 

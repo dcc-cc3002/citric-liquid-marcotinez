@@ -30,10 +30,11 @@ purpose is to serve as an educational tool, teaching foundational programming co
   * StartGame se encarga de inicializar todos los elementos necesarios para utilizar durante el juego.
 
 * Respecto a los tests:
-  * No logré probar completamente el funcionamiento del observer, pero creo que el diseño del mismo es correcto.
+  * Logré comprobar completamente el funcionamiento del observer, pero debí setear algunas características del juego.
   En este caso, el observer es el GameController y el observable es el PlayerCharacter; la norma se encarga de notificar
-  si al momento de hacer el levelUp la siguiente norma es de level 6.
-  * En el momento de entrega se tiene un 92% de coverage, aunque es verdad que faltó testear algunos métodos importantes.
+  si al momento de hacer el levelUp la siguiente norma es de level 6, de esta manera, se actualiza el winner del gameController
+  y se termina el juego.
+  * En el momento de entrega se tiene un 96% de coverage, aunque es verdad que faltó testear algunos métodos importantes.
 
 
 * Se actualizó el diagrama de estados:

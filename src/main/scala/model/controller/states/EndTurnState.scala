@@ -42,6 +42,9 @@ class EndTurnState(context: GameController) extends GameState(context) {
    * - If the current turn is greater than 4, transition to the ChapterState.
    */
   override def doAction(): Unit = {
+    if(context.getEndGame){
+      goEndGame()
+    }
     if(context.getTurn <= 4){
       goPlayTurn()
     }

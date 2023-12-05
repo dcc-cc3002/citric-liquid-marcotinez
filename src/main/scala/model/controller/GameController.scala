@@ -33,6 +33,8 @@ class GameController {
   private var chapter: Int = 1
   /** "Variable indicating whether the current player has returned from recovery." */
   private var recoveryPlayer: Boolean = false
+  /** "Variable indicating whether the game has ended." */
+  private var endGame: Boolean = false
 
   /**
    * Gets the current player whose turn it is.
@@ -104,6 +106,9 @@ class GameController {
    */
   def getWinner: PlayerCharacter = winner
 
+
+  def getEndGame: Boolean = endGame
+
   /**
    * Sets the flag indicating whether a player has completed the recovery phase.
    *
@@ -120,7 +125,7 @@ class GameController {
   /** Method related to the observer, responsible for updating the winner and ending the game. */
   def update(player: PlayerCharacter): Unit = {
     winner = player
-    goEndGame()
+    endGame = true
   }
 
   /** Method responsible for initializing the game, creating the desired number of players,

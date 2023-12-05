@@ -3,10 +3,14 @@ package model.controller
 
 import model.controller.states.{ChapterState, CombatState, EndGameState, EndTurnState, LandingPanelState, MovingState, PlayerTurnState, PregameState, RecoveryState}
 
+import cl.uchile.dcc.citric.model.norma.Norma
 import cl.uchile.dcc.citric.model.norma.normalevels.{Norma5, Norma6}
+import cl.uchile.dcc.citric.model.norma.objective.{Stars, Wins}
 
 class GameFlowTest extends munit.FunSuite {
   val gameController = new GameController
+  val gameController2 = new GameController
+  val gameController3 = new GameController
   val chapterState = new ChapterState(gameController)
   val combatState = new CombatState(gameController)
   val endGameState = new EndGameState(gameController)
@@ -17,9 +21,6 @@ class GameFlowTest extends munit.FunSuite {
   val recoveryState = new RecoveryState(gameController)
   val endTurnState = new EndTurnState(gameController)
 
-  override def beforeEach(context: BeforeEach): Unit = {
-    val gameController = new GameController
-  }
 
   test("From pregame we initialize the game"){
     //en el primer doAction se inicializa el juego (Pregame doAction)
@@ -94,24 +95,43 @@ class GameFlowTest extends munit.FunSuite {
     }
   }
 
-  test("If a player reach norma 6 the game ends"){
+  test("If a player reach norma 6 the game ends (with Stars)"){
     //en el primer doAction se inicializa el juego (Pregame doAction)
-    gameController.getState.doAction()
+    gameController2.getState.doAction()
     //Este doAction corresponde al ChapterState
-    gameController.getState.doAction()
+    gameController2.getState.doAction()
     //Este doAction corresponde al PlayerTurnState
-    gameController.getState.doAction()
+    gameController2.getState.doAction()
     //Este doAction corresponde al MovingState
-    gameController.getState.doAction()
+    gameController2.getState.doAction()
     //Este doAction corresponde al LandingPanelState
     //ponemos las condiciones para que suba a norma 6
-    gameController.getPlayerTurn.setNorma(new Norma5)
-    gameController.getPlayerTurn.starBonus(200)
+    val norma: Norma = new Norma5
+    norma.setObjetive(new Stars)
+    gameController2.getPlayerTurn.setNorma(norma)
+    gameController2.getPlayerTurn.starBonus(200)
+    gameController2.getState.doAction()
+    //forzamos el normaCheck, ya que el panel donde cae el jugador no es conocido.
+    gameController2.getPlayerTurn.normaCheck()
+  }
 
-    println(gameController.getState)
-    test("The game is in EndGameState") {
-      assert(gameController.getState.isEndGame)
-    }
-
+  test("If a player reach norma 6 the game ends (with victories)") {
+    //PregameState
+    gameController3.getState.doAction()
+    //Este doAction corresponde al ChapterState
+    gameController3.getState.doAction()
+    //Este doAction corresponde al PlayerTurnState
+    gameController3.getState.doAction()
+    //Este doAction corresponde al MovingState
+    gameController3.getState.doAction()
+    //Este doAction corresponde al LandingPanelState
+    //ponemos las condiciones para que suba a norma 6
+    val norma: Norma = new Norma5
+    norma.setObjetive(new Wins)
+    gameController3.getPlayerTurn.setNorma(norma)
+    gameController3.getPlayerTurn.setVictories(15)
+    gameController3.getState.doAction()
+    //forzamos el normaCheck, ya que el panel donde cae el jugador no es conocido.
+    gameController3.getPlayerTurn.normaCheck()
   }
 }

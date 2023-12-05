@@ -1,8 +1,10 @@
 package cl.uchile.dcc.citric
 package model.panels
 import model.entities.character.PlayerCharacter
-import model.norma.objective.Wins
+import model.norma.objective.{Stars, Wins}
+
 import munit.FunSuite
+
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
@@ -14,9 +16,13 @@ class HomePanelTest extends FunSuite {
 
   // This is the object under test.
   private var homePanel: HomePanel = _
+  private var homePanel2: HomePanel = _
+  private var homePanel3: HomePanel = _
 
   override def beforeEach(context: BeforeEach): Unit = {
     homePanel = new HomePanel(dueño_supremo)
+    homePanel2 = new HomePanel(testPlayer1)
+    homePanel3 = new HomePanel(testPlayer2)
   }
 
   test("Each panel has a type") {
@@ -90,13 +96,6 @@ class HomePanelTest extends FunSuite {
     assertEquals(testPanel.getNextPanels, List.empty[Panel])
   }
 
-  test("the panel can apply something") {
-    val testPanel: HomePanel = new HomePanel(testPlayer1)
-    val other: PlayerCharacter = new PlayerCharacter("other", 10, 1, 1, 1, new Random(11))
-    val texto: String = "Encounter activated"
-    assertEquals(testPanel.apply(other), print("HomePanel activated"))
-  }
-
   test("A player can active the panel and be heal") {
     dueño_supremo.damage(5)
     assertEquals(dueño_supremo.getHp, 5)
@@ -105,18 +104,19 @@ class HomePanelTest extends FunSuite {
   }
 
   test("A player can increase their norma level with stars") {
-    homePanel(dueño_supremo)
-    dueño_supremo.starBonus(10)
-    homePanel.apply(dueño_supremo)
-    assertEquals(dueño_supremo.getNormaLevel, 2)
+    homePanel2(testPlayer1)
+    testPlayer1.setStars(10)
+    testPlayer1.getNorma.setObjetive(new Stars)
+    homePanel2.apply(testPlayer1)
+    assertEquals(testPlayer1.getNormaLevel, 2)
   }
 
   test("A player can increase their norma level with wins") {
-    homePanel(dueño_supremo)
-    dueño_supremo.setVictories(1)
-    dueño_supremo.getNorma.setObjetive(new Wins)
-    homePanel.apply(dueño_supremo)
-    assertEquals(dueño_supremo.getNormaLevel, 2)
+    homePanel3(testPlayer2)
+    testPlayer2.setVictories(1)
+    testPlayer2.getNorma.setObjetive(new Wins)
+    homePanel3.apply(testPlayer2)
+    assertEquals(testPlayer2.getNormaLevel, 2)
   }
 
   test("A player may not have a sufficient number of wins to increase their Norma.") {
