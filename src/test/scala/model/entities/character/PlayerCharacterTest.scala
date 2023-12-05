@@ -1,6 +1,8 @@
 package cl.uchile.dcc.citric
 package model.entities.character
+import cl.uchile.dcc.citric.model.controller.GameController
 import cl.uchile.dcc.citric.model.entities.wildunit.{Chicken, RoboBall, Seagull}
+import cl.uchile.dcc.citric.model.norma.objective.Wins
 
 import scala.util.Random
 
@@ -77,16 +79,10 @@ class PlayerCharacterTest extends munit.FunSuite {
 
   test("A player can increase their norma level") {
     val player = new PlayerCharacter("test", maxHp, attack, defense, evasion, randomNumberGenerator)
-    player.normaClear()
+    player.getNorma.setObjetive(new Wins)
+    player.setVictories(1)
+    player.normaCheck()
     assertEquals(player.getNormaLevel, 2)
-    player.normaClear()
-    assertEquals(player.getNormaLevel, 3)
-    player.normaClear()
-    assertEquals(player.getNormaLevel, 4)
-    player.normaClear()
-    assertEquals(player.getNormaLevel, 5)
-    player.normaClear()
-    assertEquals(player.getNormaLevel, 6)
   }
 
   test("A player can increase their stars count in a given amount") {
@@ -206,10 +202,21 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(player.getVictories, 10)
   }
 
-  test("We can check the norma of a player ") {
+  test("A player can try to recover") {
     val player = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
-    assertEquals(player.normaCheck(), false)
-    player.starBonus(10)
-    assertEquals(player.normaCheck(), true)
+    player.damage(10)
+    for(_ <- 1 to 10) {
+      player.recovery()
+    }
+    assertEquals(player.getHp, 10)
+
   }
+
+  test("A player can have a observer") {
+    val player = new PlayerCharacter("Other", 10, 1, 1, 1, new scala.util.Random(11))
+    val controller = new GameController
+    player.register(controller)
+    assertEquals(player.getObserver, Some(controller))
+  }
+
 }

@@ -5,6 +5,9 @@ import model.entities.GameCharacter
 import model.norma.Norma
 import model.norma.normalevels.Norma1
 
+import cl.uchile.dcc.citric.model.controller.GameController
+import cl.uchile.dcc.citric.model.panels.{HomePanel, Panel}
+
 import scala.util.Random
 
 /** The `PlayerCharacter` class represents a character or avatar in the game, encapsulating
@@ -61,6 +64,15 @@ class PlayerCharacter(override protected val name: String,
   /** The number of victories the player has. */
   override protected var victories: Int = 0
 
+  /** The player's current position on the board. */
+  private var panel: Panel = _
+
+  /** The required amount that the player needs to roll on the die to recover.*/
+  private var recoveryAmount: Int = 6
+
+  /** The player's observer */
+  private var observer: Option[GameController] = None
+
   //-----------------NORMA-----------------
 
   /** Returns the player's norma level.
@@ -75,10 +87,19 @@ class PlayerCharacter(override protected val name: String,
    * */
   def getNorma: Norma = normaLevel
 
+  /** Method responsible for setting the player's norma.
+   *
+   * @param norma the norma to set.
+   * */
+  def setNorma(norma: Norma): Unit = {
+    this.normaLevel = norma
+  }
+
   /** Method responsible for starting the normaCheck. */
-  def normaCheck(): Boolean = {
+  def normaCheck(): Unit = {
     normaLevel.normaCheck(this)
   }
+
   /** Method responsible for increasing the norma level. */
   def normaClear(): Unit = {
     this.normaLevel = this.normaLevel.nextNormaLevel
@@ -89,11 +110,22 @@ class PlayerCharacter(override protected val name: String,
     this.victories = amount
   }
 
-  /**  */
+  /** Method responsible for set the HomePanel */
+  def setPanel(panel: Panel): Unit = {
+    this.panel = panel
+  }
+
+  /** Method responsible for returning the panel where the player is.
+   *
+   * @return the panel where the player is.
+   * */
+  def getPanel: Panel = panel
+
+  /** Method responsible for handling the receipt of an attack. */
   def attacked(character: GameCharacter): Unit = {
     val atk: Int = character.getAttack
     val ranNum: Int = Random.nextInt(2)+1
-    //We generate a random number to determine the WildUnit's response
+    //We generate a random number to determine the PlayerCharacter's response
     if(ranNum == 1) {
       this.defend(atk)
     }
@@ -105,5 +137,40 @@ class PlayerCharacter(override protected val name: String,
     }
   }
 
+  /** Method responsible of handling the KO of the player. */
+  def recovery(): Unit = {
+    if(!this.enCombate) {
+      val roll: Int = rollDice()
+      if (roll >= recoveryAmount) {
+        this.heal(this.maxHp)
+        recoveryAmount = 6
+      }
+      else {
+        recoveryAmount -= 1
+      }
+    }
+  }
+
+  //OBSERVER
+  /** Returns the player's observer
+   *
+   * @return the player's observer.
+   * */
+  def getObserver: Option[GameController] = observer
+
+  /** Method responsible for registering the observer.
+   *
+   * @param controller the observer to register.
+   * */
+  def register(controller: GameController): Unit = {
+    observer = Some(controller)
+  }
+
+  /** Method responsible for notifying the observer of changes in the player's Norma. */
+  def notifyObserver(): Unit = {
+    if(observer.isDefined) {
+      observer.get.update(this)
+    }
+  }
 
 }

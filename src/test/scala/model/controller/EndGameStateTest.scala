@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.controller
 
-import model.controller.states.{ChapterState, CombatState, EndGameState, LandingPanelState, MovingState, PlayerTurnState, PregameState, RecoveryState, WaitState}
+import model.controller.states.{ChapterState, CombatState, EndGameState, LandingPanelState, MovingState, PlayerTurnState, PregameState, RecoveryState, EndTurnState}
 
 class EndGameStateTest extends munit.FunSuite {
   private val gameController = new GameController
@@ -12,107 +12,67 @@ class EndGameStateTest extends munit.FunSuite {
   private val movingState = new MovingState(gameController)
   private val playerTurnState = new PlayerTurnState(gameController)
   private val recoveryState = new RecoveryState(gameController)
-  private val waitState = new WaitState(gameController)
+  private val endTurnState = new EndTurnState(gameController)
 
   test("EndGameState isEndGame"){
     assert(endGameState.isEndGame)
   }
 
   // A EndGameState can't transition to any other state
-  test("A endGameState can't transition to chapterState") {
+  test("A EndGameState can't transition to chapterState") {
     interceptMessage[AssertionError](
       s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${chapterState.getClass.getSimpleName}"
     ) {
-      endGameState.newChapter()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${chapterState.getClass.getSimpleName}"
-    ) {
-      endGameState.startGame()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${chapterState.getClass.getSimpleName}"
-    ) {
-      endGameState.doEffect()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${chapterState.getClass.getSimpleName}"
-    ) {
-      endGameState.insuficientRoll()
+      endGameState.goChapter()
     }
   }
-  test("A endGameState can't transition to combatState") {
+  test("A EndGameState can't transition to combatState") {
     interceptMessage[AssertionError](
       s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${combatState.getClass.getSimpleName}"
     ) {
-      endGameState.stopMovement()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${combatState.getClass.getSimpleName}"
-    ) {
-      endGameState.outOfMovements()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${combatState.getClass.getSimpleName}"
-    ) {
-      endGameState.evade()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${combatState.getClass.getSimpleName}"
-    ) {
-      endGameState.defend()
+      endGameState.goCombat()
     }
   }
-  test("A endGameState can't transition to endGameState") {
+  test("A EndGameState can't transition to endGameState") {
     interceptMessage[AssertionError](
       s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${endGameState.getClass.getSimpleName}"
     ) {
-      endGameState.normaSixReached()
+      endGameState.goEndGame()
     }
   }
   test("A endGameState can't transition to landingPanelState") {
     interceptMessage[AssertionError](
       s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${landingPanelState.getClass.getSimpleName}"
     ) {
-      endGameState.endCombat()
+      endGameState.goLandingPanel()
     }
   }
   test("A endGameState can't transition to movingState") {
     interceptMessage[AssertionError](
       s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${movingState.getClass.getSimpleName}"
     ) {
-      endGameState.rollDice()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${movingState.getClass.getSimpleName}"
-    ) {
-      endGameState.choosePath()
+      endGameState.goMoving()
     }
   }
   test("A endGameState can't transition to playerTurnState") {
     interceptMessage[AssertionError](
       s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${playerTurnState.getClass.getSimpleName}"
     ) {
-      endGameState.playTurn()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${playerTurnState.getClass.getSimpleName}"
-    ) {
-      endGameState.suficientRoll()
+      endGameState.goPlayTurn()
     }
   }
   test("A endGameState can't transition to RecoveryState") {
     interceptMessage[AssertionError](
       s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${recoveryState.getClass.getSimpleName}"
     ) {
-      endGameState.outOfCombat()
+      endGameState.goRecovery()
     }
   }
-  test("A endGameState can't transition to waitState") {
+  test("A endGameState can't transition to EndTurnState") {
     interceptMessage[AssertionError](
-      s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${waitState.getClass.getSimpleName}"
+      s"Cannot transition from ${endGameState.getClass.getSimpleName} to ${endTurnState.getClass.getSimpleName}"
     ) {
-      endGameState.attack()
+      endGameState.goEndTurn()
     }
   }
 }

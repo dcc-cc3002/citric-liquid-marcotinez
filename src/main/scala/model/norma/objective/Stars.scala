@@ -20,7 +20,14 @@ class Stars extends Objective {
     val normaStars: Int = normaLvl.getStars
     //The player can increase the level of their Norma using Stars
     if (playerStars >= normaStars) {
-      player.normaClear()
+      if (player.getNorma.nextNormaLevel.getLevel == 6) {
+        player.normaClear()
+        player.notifyObserver()
+
+      }
+      else {
+        player.normaClear()
+      }
     }
   }
 }

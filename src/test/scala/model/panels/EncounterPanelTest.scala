@@ -57,7 +57,7 @@ class EncounterPanelTest extends FunSuite {
     val bonusPanel: Panel = new BonusPanel()
     val dropPanel: Panel = new DropPanel()
     val encounterPanel: Panel = new EncounterPanel()
-    val homePanel: Panel = new HomePanel()
+    val homePanel: Panel = new HomePanel(testPlayer1)
     val neutralPanel: Panel = new NeutralPanel()
 
     //caso 1: panel solo un panel adyacente
@@ -89,14 +89,16 @@ class EncounterPanelTest extends FunSuite {
 
   test("Each panel has a random WildUnit") {
     for (_ <- 1 to 10) {
-      assert(encounterPanel.getRandomWildUnit().isInstanceOf[WildUnit])
+      assert(encounterPanel.getRandomWildUnit.isInstanceOf[WildUnit])
     }
   }
 
-  test("the panel can apply something"){
-    val testPanel: EncounterPanel = new EncounterPanel()
-    val other: PlayerCharacter = new PlayerCharacter("other", 10, 1, 1, 1, new Random(11))
-    val texto: String = "Encounter activated"
-    assertEquals(testPanel.apply(other), print("Encounter activated"))
+  test("A encounterPanel begins with no WildUnit") {
+    assertEquals(encounterPanel.getWildUnitEnemy, None)
+  }
+
+  test("We can get the wildunit of an EncounterPanel") {
+    encounterPanel.apply(testPlayer1)
+    assert(encounterPanel.getWildUnitEnemy.isDefined)
   }
 }

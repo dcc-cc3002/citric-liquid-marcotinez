@@ -14,7 +14,13 @@ class GameStateTest extends munit.FunSuite {
     assert(!gameState.isPlayerTurn)
     assert(!gameState.isPregame)
     assert(!gameState.isRecovery)
-    assert(!gameState.isWait)
+    assert(!gameState.isEndTurn)
+  }
+
+  test("States can do an Action, the first one is an assertion error") {
+    interceptMessage[AssertionError]("Cannot do action from GameState") {
+      gameState.doAction()
+    }
   }
 
 }

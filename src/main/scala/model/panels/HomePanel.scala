@@ -18,16 +18,10 @@ import scala.collection.mutable.ArrayBuffer
   *
   * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
   */
-class HomePanel extends AbstractPanels {
+class HomePanel(private val owner: PlayerCharacter) extends AbstractPanels {
 
   /** The type of panel. */
   val panelType: String = "Home"
-  private var owner: PlayerCharacter = _
-
-  /** Method that sets the owner of the panel. */
-  def setOwner(player: PlayerCharacter): Unit = {
-    owner = player
-  }
 
   /** Method that returns the owner of the panel. */
   def getOwner: PlayerCharacter = {
@@ -41,7 +35,7 @@ class HomePanel extends AbstractPanels {
    * */
   def apply(player: PlayerCharacter): Unit = {
     //We heal the player 1 hp
-    if(player == owner) {
+    if(player == getOwner) {
       player.heal(1)
       //We check if the player can level up
       player.normaCheck()

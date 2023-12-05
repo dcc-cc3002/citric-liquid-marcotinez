@@ -3,6 +3,8 @@ package model.panels
 
 import model.entities.character.PlayerCharacter
 
+import cl.uchile.dcc.citric.model.entities.wildunit.WildUnit
+
 import scala.collection.mutable.ArrayBuffer
 
 /** Represents a single cell on a board, known as a Panel.
@@ -86,6 +88,12 @@ trait Panel {
    * */
 
   def removeNextPanel(nextPanel: Panel): Unit
+
+  /** Returns the wildUnitEnemy that is currently on the panel.
+   *
+   * @return the wildUnitEnemy that is currently on the panel.
+   * */
+  def getWildUnitEnemy: Option[WildUnit]
 
   /** Method responsible for applying the effects of each panel on the player.
    *

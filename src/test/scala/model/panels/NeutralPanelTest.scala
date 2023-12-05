@@ -56,7 +56,7 @@ class NeutralPanelTest extends FunSuite {
     val bonusPanel: Panel = new BonusPanel()
     val dropPanel: Panel = new DropPanel()
     val encounterPanel: Panel = new EncounterPanel()
-    val homePanel: Panel = new HomePanel()
+    val homePanel: Panel = new HomePanel(testPlayer1)
     val neutralPanel: Panel = new NeutralPanel()
 
     //caso 1: panel solo un panel adyacente

@@ -1,85 +1,74 @@
 package cl.uchile.dcc.citric
 package model.controller
 
-import model.controller.states.{ChapterState, CombatState, EndGameState, LandingPanelState, MovingState, PlayerTurnState, PregameState, RecoveryState, WaitState}
+import model.controller.states.{ChapterState, CombatState, EndGameState, EndTurnState, LandingPanelState, MovingState, PlayerTurnState, PregameState, RecoveryState}
 
 class ChapterStateTest extends munit.FunSuite {
   private val gameController = new GameController
+  private val gameState = new GameState(gameController)
   private val chapterState = new ChapterState(gameController)
   private val combatState = new CombatState(gameController)
+  private val endGameState = new EndGameState(gameController)
   private val landingPanelState = new LandingPanelState(gameController)
   private val movingState = new MovingState(gameController)
-  private val waitState = new WaitState(gameController)
+  private val playerTurnState = new PlayerTurnState(gameController)
+  private val pregameState = new PregameState(gameController)
+  private val recoveryState = new RecoveryState(gameController)
+  private val endTurnState = new EndTurnState(gameController)
 
   test("ChapterState isChapter") {
     assert(chapterState.isChapter)
   }
 
   // Possible transitions from ChapterState
-  test("A chapterState can transition to chapterState") {
-    chapterState.newChapter()
-    assert(gameController.state.isInstanceOf[ChapterState])
-  }
-  test("A chapterState can transition to endGameState") {
-    chapterState.normaSixReached()
-    assert(gameController.state.isInstanceOf[EndGameState])
-  }
-  test("A chapterState can transition to recoveryState") {
-    chapterState.outOfCombat()
-    assert(gameController.state.isInstanceOf[RecoveryState])
-  }
-  test("A chapterState can transition to playerTurnState") {
-    chapterState.playTurn()
-    assert(gameController.state.isInstanceOf[PlayerTurnState])
+  test("ChapterState can change to PlayerTurnState") {
+    chapterState.goPlayTurn()
+    assert(gameController.getState.isInstanceOf[PlayerTurnState])
   }
 
-  // Impossible transitions from ChapterState
-  test("A chapterState can't transition to LandingPanelState") {
+  // Impossible Transitions from ChapterState
+  test("A chapterState can't transition to EndGameState") {
+    interceptMessage[AssertionError](
+      s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${endGameState.getClass.getSimpleName}"
+    ) {
+      chapterState.goEndGame()
+    }
+  }
+
+  test("A chapterState can't transition to combatState") {
+    interceptMessage[AssertionError](
+      s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${combatState.getClass.getSimpleName}"
+    ) {
+      chapterState.goCombat()
+    }
+  }
+
+  test("A chapterState can't transition to landingPanelState") {
     interceptMessage[AssertionError](
       s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${landingPanelState.getClass.getSimpleName}"
     ) {
-      chapterState.endCombat()
+      chapterState.goLandingPanel()
     }
   }
-  test("A chapterState can't transition to CombatState") {
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${combatState.getClass.getSimpleName}"
-    ) {
-      chapterState.stopMovement()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${combatState.getClass.getSimpleName}"
-    ) {
-      chapterState.outOfMovements()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${combatState.getClass.getSimpleName}"
-    ) {
-      chapterState.evade()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${combatState.getClass.getSimpleName}"
-    ) {
-      chapterState.defend()
-    }
-  }
-  test("A chapterState can't transition to MovingState") {
+  test("A chapterState can't transition to movingState") {
     interceptMessage[AssertionError](
       s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${movingState.getClass.getSimpleName}"
     ) {
-      chapterState.rollDice()
-    }
-    interceptMessage[AssertionError](
-      s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${movingState.getClass.getSimpleName}"
-    ) {
-      chapterState.choosePath()
+      chapterState.goMoving()
     }
   }
-  test("A chapterState can't transition to WaitState") {
+  test("A chapterState can't transition to RecoveryState") {
     interceptMessage[AssertionError](
-      s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${waitState.getClass.getSimpleName}"
+      s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${recoveryState.getClass.getSimpleName}"
     ) {
-      chapterState.attack()
+      chapterState.goRecovery()
+    }
+  }
+  test("A chapterState can't transition to EndTurnState"){
+    interceptMessage[AssertionError](
+      s"Cannot transition from ${chapterState.getClass.getSimpleName} to ${endTurnState.getClass.getSimpleName}"
+    ) {
+      chapterState.goEndTurn()
     }
   }
 }

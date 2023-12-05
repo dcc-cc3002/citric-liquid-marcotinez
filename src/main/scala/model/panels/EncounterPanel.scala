@@ -16,13 +16,15 @@ class EncounterPanel extends AbstractPanels {
 
   /** The type of panel. */
   val panelType: String = "Encounter"
-  var enemy: WildUnit = getRandomWildUnit
+  private var wildUnitEnemy: Option[WildUnit] = None
 
   /** ArrayBuffer containing the 3 available WildUnits.
    *
    * this variable contains the 3 available WildUnits that can be encountered by the player.
    * */
   private val wildunits: ArrayBuffer[WildUnit] = ArrayBuffer(new Chicken(), new RoboBall(), new Seagull())
+
+  override def getWildUnitEnemy: Option[WildUnit] = wildUnitEnemy
 
   /** Method responsible for choosing a random WildUnit that will engage in combat with the player
    * on the panel.
@@ -36,8 +38,8 @@ class EncounterPanel extends AbstractPanels {
   }
 
   def apply(player: PlayerCharacter): Unit = {
-    if(!enemy.enCombate) {
-      enemy = getRandomWildUnit
+    if (wildUnitEnemy.isEmpty || !wildUnitEnemy.get.enCombate) {
+      wildUnitEnemy = Some(getRandomWildUnit)
     }
   }
 }

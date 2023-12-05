@@ -1,63 +1,18 @@
 package cl.uchile.dcc.citric
 package model.controller
 
-import model.controller.states.{ChapterState, CombatState, EndGameState, LandingPanelState, MovingState, PlayerTurnState, PregameState, RecoveryState, WaitState}
+import model.controller.states.PregameState
 
 
 class GameControllerTest extends munit.FunSuite {
   private val gameController = new GameController()
 
   override def beforeEach(context: BeforeEach): Unit = {
-    gameController.state = new PregameState(gameController)
+    gameController.setState(new PregameState(gameController))
   }
 
   test("GameController starts in PregameState") {
-    assert(gameController.state.isInstanceOf[PregameState])
-  }
-
-  test("GameController can change states") {
-    gameController.startGame()
-    assert(gameController.state.isInstanceOf[ChapterState])
-    gameController.newChapter()
-    assert(gameController.state.isInstanceOf[ChapterState])
-    gameController.playTurn()
-    assert(gameController.state.isInstanceOf[PlayerTurnState])
-    gameController.rollDice()
-    assert(gameController.state.isInstanceOf[MovingState])
-    gameController.choosePath()
-    assert(gameController.state.isInstanceOf[MovingState])
-    gameController.stopMovement()
-    assert(gameController.state.isInstanceOf[CombatState])
-    gameController.attack()
-    assert(gameController.state.isInstanceOf[WaitState])
-    gameController.evade()
-    assert(gameController.state.isInstanceOf[CombatState])
-    gameController.attack()
-    assert(gameController.state.isInstanceOf[WaitState])
-    gameController.defend()
-    assert(gameController.state.isInstanceOf[CombatState])
-    gameController.endCombat()
-    assert(gameController.state.isInstanceOf[LandingPanelState])
-    gameController.doEffect()
-    assert(gameController.state.isInstanceOf[ChapterState])
-    gameController.outOfCombat()
-    assert(gameController.state.isInstanceOf[RecoveryState])
-    gameController.insuficientRoll()
-    assert(gameController.state.isInstanceOf[ChapterState])
-    gameController.normaSixReached()
-    assert(gameController.state.isInstanceOf[EndGameState])
-  }
-  test("GameController can change states: 2") {
-    gameController.startGame()
-    assert(gameController.state.isInstanceOf[ChapterState])
-    gameController.outOfCombat()
-    assert(gameController.state.isInstanceOf[RecoveryState])
-    gameController.suficientRoll()
-    assert(gameController.state.isInstanceOf[PlayerTurnState])
-    gameController.rollDice()
-    assert(gameController.state.isInstanceOf[MovingState])
-    gameController.outOfMovements()
-    assert(gameController.state.isInstanceOf[CombatState])
+    assert(gameController.getState.isInstanceOf[PregameState])
   }
 
   test("We know the states") {
@@ -69,6 +24,21 @@ class GameControllerTest extends munit.FunSuite {
     assert(!gameController.isPlayerTurn)
     assert(gameController.isPregame)
     assert(!gameController.isRecovery)
-    assert(!gameController.isWait)
+    assert(!gameController.isEndTurn)
+  }
+
+  test("We have initial values") {
+    assert(gameController.getTurn == 0)
+    assert(gameController.getChapter == 1)
+    assert(gameController.getPlayers.isEmpty)
+    assert(gameController.getPlayersTurnOrder.isEmpty)
+    assert(gameController.getEnemy.isEmpty)
+    assert(gameController.getWinner == null)
+    assert(gameController.getGameBoard == null)
+  }
+
+  test("We can set recoveryState") {
+    gameController.setRecoveryPlayer(true)
+    assert(gameController.getRecoveryPlayer)
   }
 }

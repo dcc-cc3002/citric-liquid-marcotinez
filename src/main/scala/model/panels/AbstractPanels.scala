@@ -3,6 +3,8 @@ package model.panels
 
 import model.entities.character.PlayerCharacter
 
+import cl.uchile.dcc.citric.model.entities.wildunit.WildUnit
+
 import scala.collection.mutable.ArrayBuffer
 
 /** This abstract class is responsible for encapsulating all the common aspects of panels.
@@ -14,6 +16,8 @@ abstract class AbstractPanels extends Panel {
 
   /** An array of characters that are currently on this panel. */
   override val characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer.empty[PlayerCharacter]
+
+  override def getWildUnitEnemy: Option[WildUnit] = None
 
   /** An array with the Next panels.*/
   var nextPanels: ArrayBuffer[Panel] = ArrayBuffer.empty[Panel]

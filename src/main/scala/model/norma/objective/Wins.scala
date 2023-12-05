@@ -19,8 +19,11 @@ class Wins extends Objective {
     val playerWins: Int = player.getVictories
     val normaWins: Int = normaLvl.getWins
     //The player can increase the level of their Norma using Wins
-    if (playerWins >= normaWins) {
+    if (normaWins <= playerWins) {
       player.normaClear()
+      if (player.getNorma.nextNormaLevel.getLevel == 6) {
+        player.notifyObserver()
+      }
     }
   }
 }

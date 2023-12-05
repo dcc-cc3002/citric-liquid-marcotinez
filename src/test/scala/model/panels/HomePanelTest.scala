@@ -16,7 +16,7 @@ class HomePanelTest extends FunSuite {
   private var homePanel: HomePanel = _
 
   override def beforeEach(context: BeforeEach): Unit = {
-    homePanel = new HomePanel()
+    homePanel = new HomePanel(dueño_supremo)
   }
 
   test("Each panel has a type") {
@@ -24,8 +24,6 @@ class HomePanelTest extends FunSuite {
   }
 
   test("Each panel has a owner") {
-    assertEquals(homePanel.getOwner, null)
-    homePanel.setOwner(dueño_supremo)
     assertEquals(homePanel.getOwner, dueño_supremo)
   }
 
@@ -62,16 +60,16 @@ class HomePanelTest extends FunSuite {
     val bonusPanel: Panel = new BonusPanel()
     val dropPanel: Panel = new DropPanel()
     val encounterPanel: Panel = new EncounterPanel()
-    val homePanel: Panel = new HomePanel()
+    val homePanel: Panel = new HomePanel(testPlayer1)
     val neutralPanel: Panel = new NeutralPanel()
 
     //caso 1: panel solo un panel adyacente
-    val testPanel: HomePanel = new HomePanel()
+    val testPanel: HomePanel = new HomePanel(testPlayer1)
     testPanel.addNextPanel(bonusPanel)
     assertEquals(testPanel.getNextPanels, List[Panel](bonusPanel))
 
     //caso 2: panel con varios paneles adyacentes
-    val testPanel2: HomePanel = new HomePanel()
+    val testPanel2: HomePanel = new HomePanel(testPlayer1)
     testPanel2.addNextPanel(bonusPanel)
     assertEquals(testPanel2.getNextPanels, List[Panel](bonusPanel))
     testPanel2.addNextPanel(dropPanel)
@@ -85,7 +83,7 @@ class HomePanelTest extends FunSuite {
   }
 
   test("A Next panel can be removed of a panel.") {
-    val testPanel: HomePanel = new HomePanel()
+    val testPanel: HomePanel = new HomePanel(testPlayer1)
     testPanel.addNextPanel(homePanel)
     assertEquals(testPanel.getNextPanels, List[Panel](homePanel))
     testPanel.removeNextPanel(homePanel)
@@ -93,36 +91,32 @@ class HomePanelTest extends FunSuite {
   }
 
   test("the panel can apply something") {
-    val testPanel: HomePanel = new HomePanel()
+    val testPanel: HomePanel = new HomePanel(testPlayer1)
     val other: PlayerCharacter = new PlayerCharacter("other", 10, 1, 1, 1, new Random(11))
     val texto: String = "Encounter activated"
     assertEquals(testPanel.apply(other), print("HomePanel activated"))
   }
 
   test("A player can active the panel and be heal") {
-    val player = new PlayerCharacter("player", 10, 1, 1, 1, new Random(11))
-    homePanel.setOwner(player)
-    player.damage(5)
-    assertEquals(player.getHp, 5)
-    homePanel.apply(player)
-    assertEquals(player.getHp, 6)
+    dueño_supremo.damage(5)
+    assertEquals(dueño_supremo.getHp, 5)
+    homePanel.apply(dueño_supremo)
+    assertEquals(dueño_supremo.getHp, 6)
   }
 
   test("A player can increase their norma level with stars") {
-    val player = new PlayerCharacter("player", 10, 1, 1, 1, new Random(11))
-    homePanel.setOwner(player)
-    player.starBonus(10)
-    homePanel.apply(player)
-    assertEquals(player.getNormaLevel, 2)
+    homePanel(dueño_supremo)
+    dueño_supremo.starBonus(10)
+    homePanel.apply(dueño_supremo)
+    assertEquals(dueño_supremo.getNormaLevel, 2)
   }
 
   test("A player can increase their norma level with wins") {
-    val player = new PlayerCharacter("player", 10, 1, 1, 1, new Random(11))
-    homePanel.setOwner(player)
-    player.setVictories(1)
-    player.getNorma.setObjetive(new Wins)
-    homePanel.apply(player)
-    assertEquals(player.getNormaLevel, 2)
+    homePanel(dueño_supremo)
+    dueño_supremo.setVictories(1)
+    dueño_supremo.getNorma.setObjetive(new Wins)
+    homePanel.apply(dueño_supremo)
+    assertEquals(dueño_supremo.getNormaLevel, 2)
   }
 
   test("A player may not have a sufficient number of wins to increase their Norma.") {
