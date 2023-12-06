@@ -3,6 +3,7 @@ package model.controller
 
 import model.controller.states.{ChapterState, CombatState, EndGameState, EndTurnState, LandingPanelState, MovingState, PlayerTurnState, PregameState, RecoveryState}
 
+import cl.uchile.dcc.citric.model.entities.character.PlayerCharacter
 import cl.uchile.dcc.citric.model.norma.Norma
 import cl.uchile.dcc.citric.model.norma.normalevels.{Norma5, Norma6}
 import cl.uchile.dcc.citric.model.norma.objective.{Stars, Wins}
@@ -113,6 +114,7 @@ class GameFlowTest extends munit.FunSuite {
     gameController2.getState.doAction()
     //forzamos el normaCheck, ya que el panel donde cae el jugador no es conocido.
     gameController2.getPlayerTurn.normaCheck()
+    assert(gameController2.getWinner.isInstanceOf[PlayerCharacter])
   }
 
   test("If a player reach norma 6 the game ends (with victories)") {
@@ -133,5 +135,6 @@ class GameFlowTest extends munit.FunSuite {
     gameController3.getState.doAction()
     //forzamos el normaCheck, ya que el panel donde cae el jugador no es conocido.
     gameController3.getPlayerTurn.normaCheck()
+    assert(gameController3.getWinner.isInstanceOf[PlayerCharacter])
   }
 }
