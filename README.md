@@ -11,9 +11,35 @@ purpose is to serve as an educational tool, teaching foundational programming co
 
 ## For Students
 
-The remainder of this README is yours to complete. Take this opportunity to describe your
-contributions, the design decisions you've made, and any other information you deem necessary.
+* Las siguientes variables tienen valores default:
+  * Para subir de norma se utiliza el objetivo "stars"; existe el método necesario para cambiar el objetivo.
+  * La cantidad de jugadores con la que se crea el GameBoard es 4.
+  * Todos los jugadores comienzan su turno en su HomePanel.
+  * GameBoard es un tablero fijo, lo que significa que siempre posee los mismos paneles y en el mismo orden.
 
+* Consideraciones:
+  * Si un jugador regresa de "recovery", aún tiene la posibilidad de jugar su turno.
+  * Se realiza un shuffle de la lista de jugadores original para determinar el orden de los jugadores;
+  luego se hace una copia de esta para utilizarla durante el juego.
+  * Si se detecta que el panel al que nos moveremos tiene uno o más jugadores, se inicia la batalla con el primero de la lista.
+  * Los encounterPanel se inicializan durante la creación del GameBoard (se añade el WildUnit).
+  * El combate tiene siempre el mismo funcionamiento: primero ataca el PlayerCharacter indicado en PlayerTurn, y luego el PlayerCharacter indicado en Enemy.
+  El combate dura hasta que alguno de los dos llegue a hp=0.
+  * Para los estados y su funcionamiento se utilizó el patrón State y el uso del método doAction() al igual que los auxiliares.
+  * El funcionamiento del método encargado de sacar al PlayerCharacter del modo K.O es idéntico al enunciado.
+  * StartGame se encarga de inicializar todos los elementos necesarios para utilizar durante el juego.
+
+* Respecto a los tests:
+  * Logré comprobar completamente el funcionamiento del observer, pero debí setear algunas características del juego.
+  En este caso, el observer es el GameController y el observable es el PlayerCharacter; la norma se encarga de notificar
+  si al momento de hacer el levelUp la siguiente norma es de level 6, de esta manera, se actualiza el winner del gameController
+  y se termina el juego.
+  * En el momento de entrega se tiene un 96% de coverage, aunque es verdad que faltó testear algunos métodos importantes.
+
+
+* Se actualizó el diagrama de estados:
+
+    ![Diagrama de estados](docs/diagrama.png)
 
 
 <div style="text-align:center;">
