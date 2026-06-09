@@ -10,10 +10,9 @@ purpose is to serve as an educational tool, teaching foundational programming co
 ---
 
 ## For Students
+- Diagrama de estados:
 
-The remainder of this README is yours to complete. Take this opportunity to describe your
-contributions, the design decisions you've made, and any other information you deem necessary.
-
+    ![Diagrama de estados](docs/diagrama.png)
 
 
 <div style="text-align:center;">
