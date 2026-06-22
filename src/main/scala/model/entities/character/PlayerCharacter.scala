@@ -1,5 +1,7 @@
 package cl.uchile.dcc.citric
-package model
+package model.entities.character
+
+import cl.uchile.dcc.citric.model.entities.GameCharacter
 
 import scala.util.Random
 
@@ -35,17 +37,71 @@ import scala.util.Random
   * @author [[https://github.com/joelriquelme/ Joel Riquelme P.]]
   * @author [[https://github.com/r8vnhill/ Ignacio Slater M.]]
   * @author [[https://github.com/Seivier/ Vicente González B.]]
-  * @author [[https://github.com/~Your github account~/ ~Your Name~]]
+  * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
   */
 class PlayerCharacter(val name: String,
-              val maxHp: Int,
-              val attack: Int,
-              val defense: Int,
-              val evasion: Int,
-              val randomNumberGenerator: Random = new Random()) {
+                      val maxHp: Int,
+                      val attack: Int,
+                      val defense: Int,
+                      val evasion: Int,
+                      val randomNumberGenerator: Random = new Random()) extends GameCharacter {
 
-  /** Rolls a dice and returns a value between 1 to 6. */
+  /** Health points that can be modified throughout the game. */
+  var hp: Int = maxHp
+
+  /** The player's current norma level. */
+  var normaLevel: Int = 1
+
+  /** The number of stars the player has collected. */
+  private var starsAmount: Int = 0
+
+  /** Rolls a dice and returns a value between 1 to 6.
+   *
+   * @return a random number between 1 and 6.
+   * */
   def rollDice(): Int = {
     randomNumberGenerator.nextInt(6) + 1
+  }
+
+  /** Returns the player's norma level.
+   *
+   * @return the player's norma level.
+   * */
+  def normaCount(): Int = {
+    normaLevel
+  }
+
+  /** Increases the player's norma level by one.
+   *
+   * @return the player's norma level.
+   * */
+  def normaClear(): Unit = {
+    normaLevel += 1
+  }
+
+  /** Returns the player's stars count
+   *
+   * @return the amount of stars the player has.
+   * */
+  def starsCount(): Int = {
+    starsAmount
+  }
+
+  /** Increases the number of stars by a given amount.
+   *
+   * @param amount the amount of stars to add.
+   * @return the amount of stars the player has.
+   * */
+  def starBonus(amount: Int): Unit = {
+    starsAmount += amount
+  }
+
+  /** Decreases the number of stars by a given amount.
+   *
+   * @param amount the amount of stars to add.
+   * @return the amount of stars the player has.
+   * */
+  def starDrop(amount: Int): Unit = {
+    starsAmount -= amount
   }
 }
