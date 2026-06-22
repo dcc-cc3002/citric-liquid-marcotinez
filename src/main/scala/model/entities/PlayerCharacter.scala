@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citric
-package model
+package model.entities
 
 import scala.util.Random
 
@@ -30,22 +30,43 @@ import scala.util.Random
   * @param evasion The player's skill to completely avoid certain attacks.
   * @param randomNumberGenerator A utility to generate random numbers. Defaults to a new `Random`
   *                              instance.
+  * @param stars The number of stars the player has collected.
+  * @param hp The current health points of the player.
   *
   * @author [[https://github.com/danielRamirezL/ Daniel Ramírez L.]]
   * @author [[https://github.com/joelriquelme/ Joel Riquelme P.]]
   * @author [[https://github.com/r8vnhill/ Ignacio Slater M.]]
   * @author [[https://github.com/Seivier/ Vicente González B.]]
-  * @author [[https://github.com/~Your github account~/ ~Your Name~]]
+  * @author [[https://github.com/marcotinez/ Marco Martínez S.]]
   */
 class PlayerCharacter(val name: String,
-              val maxHp: Int,
-              val attack: Int,
-              val defense: Int,
-              val evasion: Int,
-              val randomNumberGenerator: Random = new Random()) {
+                      val maxHp: Int,
+                      val attack: Int,
+                      val defense: Int,
+                      val evasion: Int,
+                      val randomNumberGenerator: Random = new Random(),
+                      var stars: Int = 0,
+                      var normaLevel: Int = 1,
+                      var hp: Int) {
+
 
   /** Rolls a dice and returns a value between 1 to 6. */
   def rollDice(): Int = {
     randomNumberGenerator.nextInt(6) + 1
+  }
+
+  /** Increases the number of stars by the given amount. */
+  def NormaCheck(normalevel: Int): Unit = {
+    println("Norma Check")
+  }
+
+  /** Increases the number of stars. */
+  def starBonus(): Unit = {
+
+  }
+
+  /** Decreases the number of stars. */
+  def starDrop(): Unit = {
+
   }
 }
